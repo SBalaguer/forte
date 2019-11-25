@@ -8,8 +8,10 @@ const logger = require('morgan');
 const serveFavicon = require('serve-favicon');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/user');
+const companyRouter = require('./routes/company');
 const authetication = require('./routes/authentication');
+const invoices = require('./routes/invoices');
+
 const mongoose = require('mongoose');
 const expressSession = require('express-session');
 const connectMongo = require('connect-mongo');
@@ -69,7 +71,8 @@ app.use((req,res,next) =>{
 });
 
 app.use('/', authetication);
-app.use('/user', usersRouter);
+app.use('/', invoices);
+app.use('/', companyRouter);
 app.use('/', indexRouter);
 
 // Catch missing routes and forward to error handler

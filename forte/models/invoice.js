@@ -15,8 +15,7 @@ const schema = new mongoose.Schema({
     required: true
   },
   companyWorkedFor:{
-    type: String,
-    required: true
+      type: String
   },
   cellphone: {
     type: String,
@@ -49,7 +48,7 @@ const schema = new mongoose.Schema({
         enum: [18, 23]
     }
   },
-  irss:{
+  irs:{
     retention: {
         type: Boolean,
         required: true
@@ -72,7 +71,8 @@ const schema = new mongoose.Schema({
   status: {
       type: String,
       enum: ['unapproved', 'approved', 'rejected', 'paid']
-  }
-});
+  },
+  dateOfCompletion: {type:Date,required:true}
+},{timestamps:true});
 
 module.exports = mongoose.model('Invoice', schema);

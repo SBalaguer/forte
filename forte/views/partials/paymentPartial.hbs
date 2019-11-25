@@ -3,10 +3,10 @@
     <th>Contractor</th>
     <th>Amount</th>
   </tr>
-  {{#each mockupData}}
+  {{#each invoices}}
   <tr>
-    <td>{{contractor}}</td>
-    <td>{{amount}}</td>
+    <td>{{contractorName}}</td>
+    <td>{{amountDue}}</td>
     <td><button>Pay</button></td>
   </tr>
   {{/each}}

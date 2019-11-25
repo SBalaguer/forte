@@ -40,7 +40,7 @@ const storage = multer.diskStorage({
     callback(null, '/tmp');
   },
   filename: (req, file, callback) => {
-    console.log(file);
+    // console.log(file);
     callback(null, file.originalname);
   }
 });
@@ -58,7 +58,7 @@ router.get('/sign-up', (req, res, next) => {
 router.post('/sign-up', uploader.single('logoUrl') ,(req,res,next) =>{
     // res.redirect('/');
     const { companyName, adminEmail, password, url, street, number, city, NIPC } = req.body;
-    console.log(req.body, req.file);
+    //console.log(req.body, req.file);
     const token = generateId(14);
     bcryptjs
     .hash(password, 10)
