@@ -1,6 +1,6 @@
 In here companies will sign up
 
-<form action="/sign-up" method="POST" enctype="multipart/form-data">
+<form action="/sign-up" method="POST">
 <h4>Main Details</h4>
 <label for="companyName">Company Name:</label>
 <input type="text" name="companyName" id="companyName" placeholder="Your Company Name"/>
@@ -14,9 +14,9 @@ In here companies will sign up
 <label for="url">forte.com/</label>
 <input type="text" name="url" id="url" placeholder="yourcompany"/>
 <br>
-<label for="logoUrl">Company Logo</label>
+{{!-- <label for="logoUrl">Company Logo</label>
 <input type="file" name="logoUrl" id="logoUrl">
-<br>
+<br> --}}
 <h4>Address</h4>
 <label for="street">Street Name:</label>
 <input type="text" name="street" id="street" placeholder=""/>
@@ -29,10 +29,7 @@ In here companies will sign up
 <br>
 <h4>Fiscal Details</h4>
 <label for="NIPC">NIPC</label>
-<input type="number" name="nipc" id="nipc" placeholder="123456789"/>
-<br>
-<label for="NIPC">NIPC</label>
-<input type="number" name="nipc" id="nipc" placeholder="123456789"/>
+<input type="number" name="NIPC" id="nipc" placeholder="123456789"/>
 <br>
     <button type="submit">Submit</button>
 </form>

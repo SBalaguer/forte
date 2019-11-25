@@ -49,8 +49,7 @@ const schema = new mongoose.Schema({
   logoUrl:{
         type: String,
         default: "https://www.amphenol-socapex.com/sites/default/files/wysiwyg/groupe_1.png"
-    },
-  timestamps: true
-});
+    }
+}, {timestamps: true});
 
 module.exports = mongoose.model('Company', schema);
