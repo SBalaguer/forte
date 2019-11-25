@@ -33,7 +33,7 @@ const schema = new mongoose.Schema({
         type: String
     },
     number:{
-        type: Number
+        type: String
     },
     city: {
         type: String
@@ -42,7 +42,7 @@ const schema = new mongoose.Schema({
         type: String
     }
   },
-  fiscalNumber:{
+  NIPC:{
         type: Number,
         required: true
     },

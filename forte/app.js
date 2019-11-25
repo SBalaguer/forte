@@ -9,6 +9,7 @@ const serveFavicon = require('serve-favicon');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/user');
+const signUp = require('./routes/sign-up');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(express.static(join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/user', usersRouter);
+app.use('/sign-up', signUp);
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {
