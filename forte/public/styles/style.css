@@ -1,9 +1,7 @@
-body {
-  margin: 0;
-  padding: 50px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+.payment-line {
+  display:flex;
+  justify-content: space-around;
 }
-
-a {
-  color: #00b7ff;
+li {
+  list-style-type: none;
 }

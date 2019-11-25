@@ -9,15 +9,16 @@ const serveFavicon = require('serve-favicon');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/user');
-const signUp = require('./routes/sign-up');
-
-const mongoose = require ('mongoose');
-const expressSession = require ('express-session');
+const authetication = require('./routes/authentication');
+const mongoose = require('mongoose');
+const expressSession = require('express-session');
 const connectMongo = require('connect-mongo');
 const MongoStore = connectMongo(expressSession);
-const Company = require('./models/company')
-
+const Company = require('./models/company');
+const hbs = require("hbs");
 const app = express();
+mongoose.set('useFindAndModify', false); //needed to do FindOneAndUpdate
+
 
 app.set('views', join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -27,6 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
 app.use(express.static(join(__dirname, 'public')));
+hbs.registerPartials(__dirname+"/views/partials");
 
 app.use(
   expressSession({
@@ -48,14 +50,14 @@ app.use(
 
 app.use((req,res,next) =>{
   // console.log('im running!')
-  const companyId = req.session.user;
-  console.log(companyId);
+  const companyId = req.session.company;
+  console.log('session check, company ID: ', companyId);
   if (companyId) {
     Company.findById(companyId)
     .then(signedCompany =>{
-      console.log('logged in user is', signedCompany);
-      req.user = signedCompany;
-      res.locals.user = req.user;
+      // console.log('logged in user is', signedCompany);
+      req.company = signedCompany;
+      res.locals.company = req.company;
       next();
     })
     .catch(error =>{
@@ -66,9 +68,9 @@ app.use((req,res,next) =>{
   }
 });
 
-app.use('/', indexRouter);
+app.use('/', authetication);
 app.use('/user', usersRouter);
-app.use('/sign-up', signUp);
+app.use('/', indexRouter);
 
 // Catch missing routes and forward to error handler
 app.use((req, res, next) => {
