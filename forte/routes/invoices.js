@@ -131,5 +131,40 @@ router.get('/:url/submission/:invoiceId', (req,res,next) =>{
     });
 });
 
+router.get('/:url/submission/:invoiceId/thanks', (req,res,next) =>{
+  res.render('./invoice/thanks');
+});
+
+//******************************************************************************************
+//EDITING INVOICE
+router.get('/:url/submission/:invoiceId/edit', (req,res,next) =>{
+  let companyData= {};
+  const companyUrl = req.params.url;
+  const invoiceId = req.params.invoiceId;
+  Company.findOne({url: companyUrl})
+    .then(company =>{
+      companyData = company;
+      return Invoice.findById(invoiceId);
+    })
+    .then(invoice => {
+        console.log(companyData, invoice);
+        res.render('./invoice/edit', {companyData, invoice});
+    })
+    .catch(error =>{
+      next(error);
+    });
+});
+
+router.get('/:url/submission/:invoiceId/edit', (req,res,next) =>{
+  res.render('./invoice/edit');
+});
+
+
+// //******************************************************************************************
+// //DELETING INVOICE
+// router.get('/:url/submission/:invoiceId/delete', (req,res,next) =>{
+//   res.render('./invoice/delete');
+// });
+
 
 module.exports = router;

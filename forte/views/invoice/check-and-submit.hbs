@@ -1,8 +1,9 @@
-<h1>Thanks for your payment! Find below all the details:</h1>
+<h1>Payment request created!</h1>
+<h3>Please review the information below befor submiting.</h3>
 
 <div class="card">
     <div class="card-head">
-        <p class="card-head-title">Payment due to company {{company.companyName}}</p>
+        <p class="card-head-title">Payment due to company {{companyData.companyName}}</p>
     </div>
     <div class="content">
         <p>Name: {{invoice.contractorName}}</p>
@@ -29,9 +30,9 @@
         6:32 PM - 3 Jul 18
     </div>
     <div class="action-bar u-center">
-        <button class="btn">Cancel</button>
-        <button class="btn">Save</button>
-        <button class="btn">Post</button>
+        <a href="/{{companyData.url}}/submission/{{invoice._id}}/thanks"><button class="btn">Submit</button></a>
+        <a href="/{{companyData.url}}/submission/{{invoice._id}}/edit"><button class="btn">Edit</button></a>
+        <a href="/{{companyData.url}}/submission/{{invoice._id}}/delete"><button class="btn">Delete</button></a>
     </div>
 </div>
 
