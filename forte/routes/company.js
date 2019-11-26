@@ -6,60 +6,53 @@ const router = new Router();
 const Company = require('./../models/company.js');
 const Invoice = require('./../models/invoice.js');
 
-const mockupData = [
-  {contractor:"joe",amount:"50",status:"approved"},
-  {contractor:"ruth",amount:"30",status:"paid"},
-  {contractor:"jane",amount:"100",status:"rejected"},
-  {contractor:"donny",amount:"10",status:"unaproved"}
-];
-
 const isSignedIn = require('./../middleware/route-guard.js');
 
-router.get('/:url/profile/approved', isSignedIn ,(req, res, next) => {
+//******************************************************************************************
+//DASHBOARD VIEWS
+
+router.get('/:url/profile/:status', isSignedIn ,(req, res, next) => {
   //console.log('The company ID is:',req.session.company);
   const companyUrl = req.params.url;
+  const invoiceStatus = req.params.status;
   let comp = {};
   Company.findOne({url:companyUrl})
   .then(company =>{
     const companyId = company._id;
     comp = company;
-    return Invoice.find({companyWorkedFor: companyId});
+    return Invoice.find({companyWorkedFor: companyId, status: invoiceStatus});
   })
   .then(invoices =>{
     //console.log(comp, invoices);
-    res.render('./dashboard/approved', { comp, invoices });
+    switch (invoiceStatus) {
+      case "approved":
+        res.render('./dashboard/approved', { comp, invoices });
+        break;
+      case "unapproved":
+        res.render('./dashboard/unapproved', { comp, invoices });
+        break;
+      case "rejected":
+        res.render('./dashboard/rejected', { comp, invoices });
+        break;
+      case "paid":
+        res.render('./dashboard/paid', { comp, invoices });
+        break;
+    }
   })
   .catch(error =>{
     next(error);
   });
 });
 
-router.get('/:url/profile/unnaproved', isSignedIn ,(req, res, next) => {
-  //console.log('The company ID is:',req.session.company);
-  res.render('./dashboard/unnaproved');
-});
-
-router.get('/:url/profile/rejected', isSignedIn ,(req, res, next) => {
-  //console.log('The company ID is:',req.session.company);
-  res.render('./dashboard/rejected');
-});
-
-router.get('/:url/profile/paid', isSignedIn ,(req, res, next) => {
-  //console.log('The company ID is:',req.session.company);
-  res.render('./dashboard/paid');
-});
-
-
-
-
-
+//******************************************************************************************
+//COMPANY URL VIEW
 
 router.get('/:url', (req, res, next) => {
   const url = req.params.url;
   Company.findOne({url:url})
   .then(company =>{
     console.log(company);
-    res.render('./companylandingpage', { company, mockupData });
+    res.render('./companylandingpage', { company });
   })
   .catch(error =>{
     next(error);
