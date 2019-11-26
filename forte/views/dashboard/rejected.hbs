@@ -1,0 +1,22 @@
+<h1>{{company.companyName}}</h1>
+        <h5>Admin Dashboard</h5>
+
+        <div id="tab-container" class="tab-container tabs-large tabs-classic tabs-fill tabs-center">
+            <ul>
+            <li><a href="/{{company.url}}/profile/approved">Approved</a> </li>
+            <li><a href="/{{company.url}}/profile/unnaproved">Unapproved</a></li>
+            <li class="selected"><a href="/{{company.url}}/profile/rejected">Rejected</a></li>
+            <li><a href="/{{company.url}}/profile/paid"> Paid</a></li>
+            </ul>
+
+
+        
+        </div>
+
+        <ul>
+
+        <li>{{>paymentPartial}}</li>
+
+
+        </ul> 
+<script src="/scripts/dashboard.js"></script>

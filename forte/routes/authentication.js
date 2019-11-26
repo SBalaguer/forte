@@ -127,7 +127,7 @@ router.post('/sign-in', (req,res,next) =>{
       if (response) {
           console.log('user has loggedin');
           req.session.company = companyId;
-          res.redirect(`/${companyUrl}/profile`);
+          res.redirect(`/${companyUrl}/profile/approved`);
       } else {
           return Promise.reject(new Error('Wrong password.'));
       }

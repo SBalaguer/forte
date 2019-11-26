@@ -15,7 +15,7 @@ const mockupData = [
 
 const isSignedIn = require('./../middleware/route-guard.js');
 
-router.get('/:url/profile', isSignedIn ,(req, res, next) => {
+router.get('/:url/profile/approved', isSignedIn ,(req, res, next) => {
   //console.log('The company ID is:',req.session.company);
   const companyUrl = req.params.url;
   let comp = {};
@@ -27,12 +27,32 @@ router.get('/:url/profile', isSignedIn ,(req, res, next) => {
   })
   .then(invoices =>{
     //console.log(comp, invoices);
-    res.render('./admin/dashboard', { comp, invoices });
+    res.render('./dashboard/approved', { comp, invoices });
   })
   .catch(error =>{
     next(error);
   });
 });
+
+router.get('/:url/profile/unnaproved', isSignedIn ,(req, res, next) => {
+  //console.log('The company ID is:',req.session.company);
+  res.render('./dashboard/unnaproved');
+});
+
+router.get('/:url/profile/rejected', isSignedIn ,(req, res, next) => {
+  //console.log('The company ID is:',req.session.company);
+  res.render('./dashboard/rejected');
+});
+
+router.get('/:url/profile/paid', isSignedIn ,(req, res, next) => {
+  //console.log('The company ID is:',req.session.company);
+  res.render('./dashboard/paid');
+});
+
+
+
+
+
 
 router.get('/:url', (req, res, next) => {
   const url = req.params.url;
@@ -45,5 +65,6 @@ router.get('/:url', (req, res, next) => {
     next(error);
   });
 });
+
 
 module.exports = router;
