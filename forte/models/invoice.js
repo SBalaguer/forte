@@ -14,65 +14,70 @@ const schema = new mongoose.Schema({
     trim: true,
     required: true
   },
-  companyWorkedFor:{
-      type: String
+  companyWorkedFor: {
+    type: String
   },
   cellphone: {
     type: String,
     required: true
   },
-  iban:{
+  iban: {
     type: String,
     lowercase: true,
     trim: true,
     required: true
   },
-  jobDescription:{
-      type: String,
-      required: true
+  jobDescription: {
+    type: String,
+    required: true
   },
   hiredByPerson: {
-      type: String
+    type: String
   },
   amountDue: {
-      type: Number,
-      required: true
+    type: Number,
+    required: true
   },
-  vat:{
+  vat: {
     chargeVat: {
-        type: Boolean,
-        required: true
+      type: Boolean,
+      required: true
     },
-    rate:{
-        type: Number,
-        enum: [18, 23]
+    rate: {
+      type: Number,
+      enum: [18, 23]
     }
   },
-  irs:{
+  irs: {
     retention: {
-        type: Boolean,
-        required: true
+      type: Boolean,
+      required: true
     },
-    rate:{
-        type: Number,
-        enum: [25, 30]
+    rate: {
+      type: Number,
+      enum: [25, 30]
     }
   },
   amountToTransfer: {
-      type: Number
+    type: Number
   },
   comment: {
-      type: String
+    type: String
   },
   pdf: {
-      type: String,
-      required: true
+    type: String,
+    required: true
   },
   status: {
-      type: String,
-      enum: ['unapproved', 'approved', 'rejected', 'paid']
+    type: String,
+    enum: ['unapproved', 'approved', 'rejected', 'paid']
   },
-  dateOfCompletion: {type:Date,required:true}
-},{timestamps:true});
+  dateOfCompletion: {
+    type: Date,
+    required: true
+  }
+}, {
+  timestamps: true
+});
 
 module.exports = mongoose.model('Invoice', schema);
