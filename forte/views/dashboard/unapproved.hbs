@@ -1,4 +1,12 @@
-<h1>{{company.companyName}}</h1>
+<div class="dashboard-header">
+    <h1>{{company.companyName}}</h1>
+    <div class="buttons-dashboard-header">
+        <button>Settings</button>
+        <form action="/{{company.url}}/sign-out" method="POST">
+            <button>Logout</button>
+        </form>    
+    </div>
+</div>
         <h5>Admin Dashboard</h5>
 
         <div id="tab-container" class="tab-container tabs-large tabs-classic tabs-fill tabs-center">
