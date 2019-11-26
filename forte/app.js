@@ -53,7 +53,7 @@ app.use(
 app.use((req,res,next) =>{
   // console.log('im running!')
   const companyId = req.session.company;
-  console.log('session check, company ID: ', companyId);
+  //console.log('session check, company ID: ', companyId);
   if (companyId) {
     Company.findById(companyId)
     .then(signedCompany =>{

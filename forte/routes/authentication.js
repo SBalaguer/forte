@@ -108,15 +108,16 @@ router.get('/sign-in', (req,res,next) =>{
 });
 
 router.post('/sign-in', (req,res,next) =>{
-  const { email, password } = req.body;
-  // console.log(req.body);
+  const { adminEmail, password } = req.body;
+  console.log(req.body);
   let companyId;
   let companyUrl;
-  Company.findOne({email})
+  Company.findOne({adminEmail})
   .then(company =>{
       if (company) {
         companyId = company._id;
         companyUrl = company.url;
+        console.log('This is the info of the company logging-in',companyId, companyUrl);
         return bcryptjs.compare(password, company.passwordHash);
       } else {
           return Promise.reject(new Error('Username does not exist.')); 
@@ -124,7 +125,7 @@ router.post('/sign-in', (req,res,next) =>{
   })
   .then(response => {
       if (response) {
-          // console.log('user has loggedin');
+          console.log('user has loggedin');
           req.session.company = companyId;
           res.redirect(`/${companyUrl}/profile`);
       } else {

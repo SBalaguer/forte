@@ -11,12 +11,12 @@ module.exports = ((req,res,next) =>{
             next();
         } else {
             res.redirect('/sign-in');
-            console.log('first verification false')
+            console.log('User from another company trying to log in');
         }
     } else {
         //console.log(req.params.companyName);
         res.redirect('/sign-in');
-        console.log('second verification false')
+        console.log('No user in session');
         //next(new Error('User has no permission to visit that page.'));
     }
 });

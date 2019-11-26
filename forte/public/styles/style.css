@@ -5,3 +5,18 @@
 li {
   list-style-type: none;
 }
+
+body {
+  background: linear-gradient(to bottom, #e2e2e2, #c9d6ff) no-repeat fixed;
+}
+
+/* .hero-body{
+  display: flex;
+  flex-direction: column;
+
+} */
+
+.frame {
+  background-color: #FFF;
+  
+}

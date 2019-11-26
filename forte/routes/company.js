@@ -26,7 +26,7 @@ router.get('/:url/profile', isSignedIn ,(req, res, next) => {
     return Invoice.find({companyWorkedFor: companyId});
   })
   .then(invoices =>{
-    console.log(comp, invoices);
+    //console.log(comp, invoices);
     res.render('./admin/dashboard', { comp, invoices });
   })
   .catch(error =>{

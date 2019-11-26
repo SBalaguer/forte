@@ -1,21 +1,23 @@
-<h1>{{company.companyName}}</h1>
-<h5>Admin Dashboard</h5>
+<div class="content u-no-padding frame">
+    <h1>{{company.companyName}}</h1>
+    <h5>Admin Dashboard</h5>
 
-<div id="tab-container" class="tab-container tabs-large tabs-classic tabs-fill tabs-center">
+    <div id="tab-container" class="tab-container tabs-large tabs-classic tabs-fill tabs-center">
+        <ul>
+        <li class="selected"> <a>Approved</a> </li>
+        <li><a>Unapproved</a></li>
+        <li><a>Rejected</a></li>
+        <li><a>Paid</a></li>
+        </ul>
+
+    
+    </div>
+
     <ul>
-       <li class="selected"> <a>Approved</a> </li>
-       <li><a>Unapproved</a></li>
-       <li><a>Rejected</a></li>
-       <li><a>Paid</a></li>
-    </ul>
 
-  
+    <li>{{>paymentPartial}}</li>
+
+
+    </ul> 
 </div>
-
- <ul>
-
-<li>{{>paymentPartial}}</li>
-
-
-</ul> 
 <script src="/scripts/dashboard.js"></script>
