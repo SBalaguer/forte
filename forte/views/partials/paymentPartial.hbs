@@ -1,44 +1,14 @@
-<table class="table fixed-head small">
- 
-  <thead>
+<table class="table.fixed-head">
   <tr>
-    <td>Contractor</th>
-    <td>Date Due</td>
-    <td>Amount to Transfer</th>
-    
+    <th>Contractor</th>
+    <th>Amount</th>
   </tr>
-  </thead>
- <tbody>
-   {{#each invoices}}
+  {{#each invoices}}
   <tr>
     <td>{{contractorName}}</td>
-    <td>{{dateOfCompletion}}</td>
     <td>{{amountDue}}</td>
-    <td><button>View</button></td>
-    <td><button class="btn-danger">Reject</button></td>
-    <td><a href="#process-payment"><button class="btn-success">Pay</button></td></a>
+    <td><button>Pay</button></td>
   </tr>
   {{/each}}
-  </tbody>
+  
 </table>
-
-{{#each invoices}}
-<div class="modal" id="process-payment">
-    <a href="#target" class="modal-overlay close-btn" aria-label="Close"></a>
-    <div class="modal-content" role="document">
-        <div class="modal-header">
-            <a href="#components" class="pull-right" aria-label="Close"><span class="icon"><i class="fa fa-wrapper fa-times"></i></span></a>
-            <div class="modal-title">Process Payment for {{contractorName}}</div>
-        </div>
-        <div class="modal-body">
-          <p id="numbertocopy">{{iban}}</p>
-          <button onclick="copyToClipboard()">Copy to Clipboard</button>
-
-            <!-- Modal content -->
-        </div>
-        <div class="modal-footer">
-            <!-- Rows, buttons, etc... -->
-        </div>
-    </div>
-</div>
-{{/each}}

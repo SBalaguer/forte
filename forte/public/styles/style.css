@@ -26,11 +26,3 @@ body {
 .inside {
   padding: 3em;
 }
-
-.table.fixed-head tbody { 
-  height: 300px
-}
-
-.hidden { visibility: hidden;
-
-}
