@@ -32,48 +32,8 @@
     <div class="action-bar u-center">
         <a href="/{{companyData.url}}/submission/{{invoice._id}}/thanks"><button class="btn">Submit</button></a>
         <a href="/{{companyData.url}}/submission/{{invoice._id}}/edit"><button class="btn">Edit</button></a>
-        <a href="/{{companyData.url}}/submission/{{invoice._id}}/delete"><button class="btn">Delete</button></a>
+        <form action="/{{companyData.url}}/submission/{{invoice._id}}/delete" method="POST">
+            <button class="btn">Delete</button>
+        </form>
     </div>
 </div>
-
-{{!-- <form action="/{{company.url}}/submission" method="POST" enctype="multipart/form-data">
-    <label for="name">Name</label>  
-    <input type="text" name="contractorName">
-    
-    <label for="email">Email</label>  
-    <input type="email" name="email">
-    
-    <label for="cellphone">Cellphone</label>  
-    <input type="text" name="cellphone">
-    
-    <label for="iban">IBAN</label>  
-    <input type="text" name="iban">
-    
-    <label for="jobDescription">Job Description</label>  
-    <input type="text" name="jobDescription">
-    
-    <label for="hiredByPerson">Person of Contact</label>  
-    <input type="text" name="hiredByPerson">
-    
-    <label for="amountDue">Amount Due</label>  
-    <input type="number" name="amountDue">
-    
-    <label for="dateOfCompletion">Date of Completion</label>  
-    <input type="date" name="dateOfCompletion">
-    
-    <label for="chargeVat">Do you charge VAT?</label>
-    <input type="radio" name="chargeVat" value="true">Yes
-    <input type="radio" name="chargeVat" value="false">No
-    <br>
-    
-    <label for="retainIrs">Do you retain IRS?</label>
-    <input type="radio" name="retainIrs" value="true">Yes
-    <input type="radio" name="retainIrs" value="false">No<br>
-
-    <label for="comment">Extra Comments</label>
-    <input type="text" name="comment">
-
-    <label for="pdf">Add your Invoice below</label>
-    <input type="file" name="pdf">
-    <button>Submit</button>
-</form> --}}

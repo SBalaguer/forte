@@ -7,13 +7,6 @@ const nodemailer = require('nodemailer');
 const Company = require('./../models/company.js');
 const Invoice = require('./../models/invoice.js');
 
-const mockupData = [
-  {contractor:"joe",amount:"50",status:"approved"},
-  {contractor:"ruth",amount:"30",status:"paid"},
-  {contractor:"jane",amount:"100",status:"rejected"},
-  {contractor:"donny",amount:"10",status:"unaproved"}
-];
-
 //******************************************************************************************
 //SETING UP NODEMAILER
 const transporter = nodemailer.createTransport({
@@ -61,6 +54,7 @@ router.post('/:url/submission', uploader.single('pdf') ,(req,res,next) =>{
     // res.redirect('/');
     const { contractorName, email, cellphone, iban, jobDescription, hiredByPerson, amountDue, dateOfCompletion, comment} = req.body;
     const companyUrl = req.params.url;
+    console.log(req.body.dateOfCompletion);
     //console.log(req.body, req.file);
     let companyId = "";
     let invoiceId = "";
@@ -147,7 +141,7 @@ router.get('/:url/submission/:invoiceId/edit', (req,res,next) =>{
       return Invoice.findById(invoiceId);
     })
     .then(invoice => {
-        console.log(companyData, invoice);
+        // console.log(companyData, invoice);
         res.render('./invoice/edit', {companyData, invoice});
     })
     .catch(error =>{
@@ -155,16 +149,52 @@ router.get('/:url/submission/:invoiceId/edit', (req,res,next) =>{
     });
 });
 
-router.get('/:url/submission/:invoiceId/edit', (req,res,next) =>{
-  res.render('./invoice/edit');
+router.post('/:url/submission/:invoiceId/edit', uploader.single('pdf'), (req,res,next) =>{
+  const companyUrl = req.params.url;
+  const invoiceId = req.params.invoiceId;
+  const { contractorName, email, cellphone, iban, jobDescription, hiredByPerson, amountDue, dateOfCompletion, comment} = req.body;
+  Invoice.findByIdAndUpdate(invoiceId, {
+    contractorName,
+    email,
+    cellphone,
+    iban,
+    jobDescription,
+    hiredByPerson,
+    amountDue,
+    dateOfCompletion,
+    vat:{
+        chargeVat: req.body.chargeVat,
+        rate: 18
+    },
+    irs:{
+        retention: req.body.retainIrs,
+        rate: 25
+    },
+    comment,
+    pdf: req.file.path
+  })
+  .then(() => {
+      res.redirect(`/${companyUrl}/submission/${invoiceId}`);
+  })
+  .catch(error =>{
+    next(error);
+  });
 });
 
+//******************************************************************************************
+//DELETING INVOICE
 
-// //******************************************************************************************
-// //DELETING INVOICE
-// router.get('/:url/submission/:invoiceId/delete', (req,res,next) =>{
-//   res.render('./invoice/delete');
-// });
+router.post('/:url/submission/:invoiceId/delete', (req,res,next) =>{
+  const invoiceId = req.params.invoiceId;
+  Invoice.findByIdAndDelete(invoiceId)
+  .then(()=>{
+    console.log('Item has been removed');
+    res.redirect('/');
+  })
+  .catch(error =>{
+    next(error);
+  });
+});
 
 
 module.exports = router;
