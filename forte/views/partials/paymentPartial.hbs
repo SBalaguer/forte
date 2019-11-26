@@ -17,8 +17,9 @@
     <td>{{contractorName}}</td>
     <td>{{dateOfCompletion}}</td>
     <td>{{amountDue}}</td>
-    <td><button>View</button></td>
-    <td><form action="/{{this._id}}/reject"><button class="btn-danger">Reject</button></form></td>
+    <td><a href="/invoices/{{this._id}}/"><button>View</button></a></td>
+    <td><form method="POST" action="/{{this._id}}/approved"><button class="btn">Approve</button></form></td>
+   <td><form method="POST" action="/{{this._id}}/rejected"><button class="btn-danger">Reject</button></form></td>
     <td><a href="#process-payment-{{this._id}}"><button class="btn-success">Pay</button></td></a>
   </tr>
   {{/each}}
@@ -44,6 +45,9 @@
         <div class="modal-body">
           <input id="iban-{{this.iban}}" type="text" value="{{this.iban}}">
           <button onclick="copyToClipboard({{this.iban}})">Copy to Clipboard</button>
+          <button>Visit Bank</button>
+    <form method="POST" action="/{{this._id}}/paid"><button class="btn-success">Payment Processed</button></form>
+
 
             <!-- Modal content -->
         </div>
