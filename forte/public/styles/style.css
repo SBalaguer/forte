@@ -26,3 +26,7 @@ body {
 .inside {
   padding: 3em;
 }
+
+.table.fixed-head tbody {
+  height:50vh;
+}
