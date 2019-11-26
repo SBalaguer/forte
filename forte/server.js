@@ -27,7 +27,11 @@ process.on('uncaughtException', error => {
 });
 
 const onError = error => {
-  const { syscall, port, code } = error;
+  const {
+    syscall,
+    port,
+    code
+  } = error;
   if (syscall === 'listen' && code === 'EADDRINUSE') {
     console.error(`Port ${port} is already in use`);
     process.exit(1);
@@ -39,7 +43,9 @@ const onError = error => {
 };
 
 const onListening = server => {
-  const { port } = server.address();
+  const {
+    port
+  } = server.address();
   debug(`Node server listening on ${ port }`);
 };
 
