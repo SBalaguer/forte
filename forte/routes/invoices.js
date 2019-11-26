@@ -41,6 +41,7 @@ const storage = multer.diskStorage({
     storage
   });
 
+
 //******************************************************************************************
 //SETTING UP SUBMISSION ROUTES
 router.get('/:url/submission' ,(req, res, next) => {
@@ -62,6 +63,7 @@ router.post('/:url/submission', uploader.single('pdf') ,(req,res,next) =>{
     const companyUrl = req.params.url;
     //console.log(req.body, req.file);
     let companyId = "";
+    let invoiceId = "";
     Company.findOne({url: companyUrl})
     .then(company =>{
       companyId = company._id;
@@ -88,8 +90,9 @@ router.post('/:url/submission', uploader.single('pdf') ,(req,res,next) =>{
         companyWorkedFor: companyId
       });
     })
-    .then(company => {
-        res.redirect(`/${company.url}/profile`);
+    .then(invoice => {
+        invoiceId = invoice._id
+        res.redirect(`/${companyUrl}/submission/${invoiceId}`);
     })
     .then(
       transporter.sendMail({
@@ -108,6 +111,25 @@ router.post('/:url/submission', uploader.single('pdf') ,(req,res,next) =>{
     });
 });
 
+//******************************************************************************************
+//SETTING UP SINGLE VIEWING ROUTES
+
+router.get('/:url/submission/:invoiceId', (req,res,next) =>{
+  let companyData= {};
+  const companyUrl = req.params.url;
+  const invoiceId = req.params.invoiceId;
+  Company.findOne({url: companyUrl})
+    .then(company =>{
+      companyData = company;
+      return Invoice.findById(invoiceId);
+    })
+    .then(invoice => {
+        res.render('./invoice/check-and-submit', {companyData, invoice});
+    })
+    .catch(error =>{
+      next(error);
+    });
+});
 
 
 module.exports = router;
