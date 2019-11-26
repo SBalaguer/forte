@@ -10,11 +10,6 @@ body {
   background: linear-gradient(to bottom, #e2e2e2, #c9d6ff) no-repeat fixed;
 }
 
-/* .hero-body{
-  display: flex;
-  flex-direction: column;
-
-} */
 
 .frame {
   background-color: #FFF;
@@ -29,4 +24,18 @@ body {
 
 .table.fixed-head tbody {
   height:50vh;
+}
+
+.dashboard-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.buttons-dashboard-header {
+  display: flex;
+  flex-direction: row;
+}
+.buttons-dashboard-header button{
+  margin-left: 1em;
 }

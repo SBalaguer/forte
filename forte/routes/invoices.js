@@ -237,22 +237,44 @@ router.post('/:url/submission/:invoiceId/delete', (req, res, next) => {
 //status change from approved to reject
 
 router.post('/:id/:action', (req, res, next) => {
-
   const id = req.params.id;
   const action = req.params.action;
-  console.log("id: ", id, "action: ", action);
-
-  Invoice.findByIdAndUpdate(id, {
-    status: action
-  }).then(document => {
-    res.redirect('back');
-
+  // console.log(req.session.company);
+  // console.log("id: ", id, "action: ", action);
+  const companyId = req.session.company;
+  let companyUrl = '';
+  let previousStatus = '';
+  Company.findById(companyId)
+  .then(company =>{
+    companyUrl = company.url;
+    return Invoice.findById(id);
+  })
+  .then(invoice => {
+    previousStatus = invoice.status;
+    return Invoice.findByIdAndUpdate(id, {
+      status: action
+    });
+  })
+  .then(() => {
+    res.redirect(`/${companyUrl}/profile/${previousStatus}`);
   }).catch(err => {
     next(err);
   });
 });
 
+//******************************************************************************************
+//FINDING A SINGLE INVOICE
 
+router.get('/invoices/:invoiceId', (req, res, next) => {
+  const invoiceId = req.params.invoiceId;
+  Invoice.findById(invoiceId)
+    .then(invoice => {
+      res.render('./dashboard/single-payment', {invoice});
+    })
+    .catch(error => {
+      next(error);
+    });
+});
 
 
 

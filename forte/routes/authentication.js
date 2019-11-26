@@ -169,6 +169,12 @@ router.get('/confirm/:token', (req,res,next) =>{
     });
 });
 
+router.post('/:url/sign-out', (req,res,next) =>{
+  const companyUrl = req.params.url;
+  req.session.destroy();
+  res.redirect(`/${companyUrl}`);
+});
+
 
 
 module.exports = router;
