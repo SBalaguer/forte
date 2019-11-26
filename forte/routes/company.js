@@ -45,6 +45,14 @@ router.get('/:url/profile/:status', isSignedIn ,(req, res, next) => {
 });
 
 //******************************************************************************************
+//COMPANY SETTINGS VIEW
+
+router.get('/:url/settings', isSignedIn , (req, res, next) => {
+  res.render('./dashboard/settings');
+});
+
+
+//******************************************************************************************
 //COMPANY URL VIEW
 
 router.get('/:url', (req, res, next) => {

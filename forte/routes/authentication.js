@@ -81,7 +81,7 @@ router.post('/sign-up', uploader.single('logoUrl') ,(req,res,next) =>{
     .then(company => {
         req.session.company = company._id;
         // console.log('Created user', company);
-        res.redirect(`/${company.url}/profile`);
+        res.redirect(`/${company.url}/profile/approved`);
     })
     .then(
       transporter.sendMail({
