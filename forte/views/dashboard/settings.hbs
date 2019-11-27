@@ -1,1 +1,65 @@
-<h1>Here we will be having all the settings view</h1>
+<div class="settings-header" style="display: flex; flex-direction: row; align-items:center; justify-content:space-between;">
+    <div>
+        <h2>Settings</h2>
+    </div>
+    <div>
+        <figure class="avatar avatar--large">
+            <img src="{{company.logoUrl}}" alt="">
+        </figure>
+    </div>
+</div>
+
+<div style="display: flex; flex-direction: row; align-items:center; justify-content:space-between; width: 95%">
+    <div style="width: 50%">
+
+    </div>
+    <div style="width: 50%;">
+        <h6 style="margin-bottom: 1em;">Existing Users</h6>
+        {{#each usersInCompany}}
+            <div class="tile">
+                <div class="tile__icon">
+                    <figure class="avatar">
+                        <img src="{{this.profilePicUrl}}">
+                    </figure>
+                </div>
+                <div class="tile__container">
+                    <p class="tile__subtitle u-no-margin">Name: {{this.name}}</p>
+                    <p class="tile__subtitle u-no-margin">Role: {{this.role}}</p>
+                    <p class="tile__buttons u-no-margin">
+                        <button class="btn-tiny uppercase">Change Role</button>
+                        <button class="btn-primary btn-tiny uppercase">Remove User</button>
+                    </p>
+                </div>
+            </div>
+        {{/each}}
+        <a href="#create-user"><button class="btn-success btn-small">Add new User</button></a>
+    </div>
+</div>
+
+
+
+{{!-- Modal to create new User --}}
+<div class="modal modal-animated--zoom-in" id="create-user">
+    <a href="#target" class="modal-overlay close-btn" aria-label="Close"></a>
+    <div class="modal-content" role="document">
+        <div class="modal-header">
+            <a href="#components" class="pull-right" aria-label="Close"><span class="icon"><i class="fa fa-wrapper fa-times"></i></span></a>
+            <div class="modal-title">Create new User</div>
+        </div>
+        <div class="modal-body">
+            <form action="/{{company.url}}/settings/new-user" method="POST">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Name" name="name">
+                <label for="email">Email</label>
+                <input type="text" id="email" placeholder="Email" name="email">
+                <label for="role">Role</label>
+                <select name="role" id="role" style="margin-bottom: 1em;">
+                    <option value="Payer">Payer</option>
+                    <option value="Controller">Controller</option>
+                </select>
+                <button>Submit</button>
+            </form>
+            
+        </div>
+    </div>
+</div>

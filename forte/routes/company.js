@@ -5,6 +5,7 @@ const router = new Router();
 
 const Company = require('./../models/company.js');
 const Invoice = require('./../models/invoice.js');
+const User = require('./../models/user.js');
 
 const isSignedIn = require('./../middleware/route-guard.js');
 
@@ -48,7 +49,20 @@ router.get('/:url/profile/:status', isSignedIn ,(req, res, next) => {
 //COMPANY SETTINGS VIEW
 
 router.get('/:url/settings', isSignedIn , (req, res, next) => {
-  res.render('./dashboard/settings');
+  // const companyUrl = req.params.url;
+  const companyId = (req.session.company);
+  let usersInCompany = {};
+  User.find({companyId: companyId})
+  .then(usersList =>{
+    usersInCompany = usersList;
+    return Company.findById(companyId);
+  })
+  .then(company => {
+    res.render('./dashboard/settings', { company, usersInCompany });
+  })
+  .catch(error =>{
+    next(error);
+  });
 });
 
 
@@ -59,7 +73,7 @@ router.get('/:url', (req, res, next) => {
   const url = req.params.url;
   Company.findOne({url:url})
   .then(company =>{
-    console.log(company);
+    // console.log(company);
     res.render('./companylandingpage', { company });
   })
   .catch(error =>{

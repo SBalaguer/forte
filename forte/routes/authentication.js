@@ -19,10 +19,6 @@ const generateId = length => {
   return token;
 };
 
-
-// const EMAIL = 'santi.ironhack.test@gmail.com';
-// const PASSWORD = 's@anti1234';
-
 //******************************************************************************************
 //SETING UP NODEMAILER
 const transporter = nodemailer.createTransport({
@@ -109,7 +105,7 @@ router.get('/sign-in', (req,res,next) =>{
 
 router.post('/sign-in', (req,res,next) =>{
   const { adminEmail, password } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   let companyId;
   let companyUrl;
   Company.findOne({adminEmail})

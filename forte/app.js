@@ -13,12 +13,15 @@ const indexRouter = require('./routes/index');
 const companyRouter = require('./routes/company');
 const authetication = require('./routes/authentication');
 const invoices = require('./routes/invoices');
+const users = require('./routes/users');
 
 const mongoose = require('mongoose');
 const expressSession = require('express-session');
 const connectMongo = require('connect-mongo');
 const MongoStore = connectMongo(expressSession);
 const Company = require('./models/company');
+const User = require('./models/user');
+
 const hbs = require("hbs");
 const app = express();
 mongoose.set('useFindAndModify', false); //needed to do FindOneAndUpdate
@@ -35,6 +38,7 @@ app.use(cookieParser());
 app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
 app.use(express.static(join(__dirname, 'public')));
 hbs.registerPartials(__dirname + "/views/partials");
+
 
 app.use(
   expressSession({
@@ -57,6 +61,7 @@ app.use(
 app.use((req, res, next) => {
   // console.log('im running!')
   const companyId = req.session.company;
+  const userId = req.session.user;
   //console.log('session check, company ID: ', companyId);
   if (companyId) {
     Company.findById(companyId)
@@ -69,14 +74,27 @@ app.use((req, res, next) => {
       .catch(error => {
         next(error);
       });
+  } else if (userId) {
+    User.findById(userId)
+      .then(signedUser => {
+        // console.log('logged in user is', signedCompany);
+        req.user = signedUser;
+        res.locals.user = req.user;
+        next();
+      })
+      .catch(error => {
+        next(error);
+      });
   } else {
     next();
   }
+  
 });
 
 app.use('/', authetication);
 app.use('/', invoices);
 app.use('/', companyRouter);
+app.use('/', users);
 app.use('/', indexRouter);
 
 // Catch missing routes and forward to error handler
