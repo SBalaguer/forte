@@ -4,6 +4,7 @@ const { Router } = require('express');
 const router = new Router();
 const bcryptjs = require('bcryptjs');
 const Company = require('./../models/company.js');
+const User = require('./../models/user.js');
 const multer = require('multer');
 const nodemailer = require('nodemailer');
 
