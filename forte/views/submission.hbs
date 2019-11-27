@@ -1,5 +1,8 @@
 <h1>{{company.companyName}}</h1>
-<img src={{company.logoUrl}} width="200px" alt="logo"/>
+<figure class="avatar avatar">
+    <img src={{company.logoUrl}} />
+</figure>
+
 <h4>Invoice Submission</h4>
 <form action="/{{company.url}}/submission" method="POST" enctype="multipart/form-data">
     <label for="name">Name</label>  
