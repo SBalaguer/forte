@@ -90,7 +90,7 @@ function mod97(string) {
 }
 const ibanInput = document.getElementsByName("iban")[0];
 
-ibanInput.addEventListener("input", (e) => {
+ibanInput.addEventListener("keyup", (e) => {
   if (isValidIBANNumber(e.srcElement.value)) {
 
     document.getElementById("iban-hint").innerText = "IBAN is Valid";
@@ -98,23 +98,32 @@ ibanInput.addEventListener("input", (e) => {
   } else {
 
     document.getElementById("iban-hint").innerText = "Please insert a valid IBAN";
-    document.getElementById("submit").setAttribute("disabled", "");
+    document.getElementById("submit").setAttribute("disabled");
   };
 })
 
-let calc = function (value, vat, irs) {
-  if (isNaN(parseInt(vat))) {
-    vat = 0;
-  }
-  if (isNaN(parseInt(irs))) {
-    irs = 0;
+const chargeVat = document.getElementsByName("chargeVat");
+console.log(chargeVat[0].checked);
+
+chargeVat[0].addEventListener("change", (e) => {
+  if (e.srcElement.checked) {
+    document.getElementsByName("vatRate")[0].removeAttribute("hidden");
+  } else {
+
+    document.getElementsByName("vatRate")[0].setAttribute("hidden", "true");
   }
 
-  return value * (1 + (vat - irs) / 100)
-}
+})
 
-document.addEventListener("input", e => {
-  document.getElementById("amountToTransfer").value =
-    calc(document.getElementById("amountDue").value, document.getElementById("vat").value, document.getElementById("irs").value);
+const retainIrs = document.getElementsByName("retainIrs");
+console.log(retainIrs[0].checked);
+
+retainIrs[0].addEventListener("change", (e) => {
+  if (e.srcElement.checked) {
+    document.getElementsByName("irsRate")[0].removeAttribute("hidden");
+  } else {
+
+    document.getElementsByName("irsRate")[0].setAttribute("hidden", "true");
+  }
 
 })
