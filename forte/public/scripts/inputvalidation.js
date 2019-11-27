@@ -1,22 +1,3 @@
-/* var invalidClassName = 'invalid'
-var inputs = document.querySelectorAll('input, select, textarea')
-inputs.forEach(function (input) {
-  // Add a css class on submit when the input is invalid.
-  input.addEventListener('invalid', function () {
-    input.classList.add(invalidClassName)
-  })
-
-  // Remove the class when the input becomes valid.
-  // 'input' will fire each time the user types
-  input.addEventListener('input', function () {
-    if (input.validity.valid) {
-      input.classList.remove(invalidClassName)
-    }
-  })
-})
- */
-
-
 function isValidIBANNumber(input) {
   var CODE_LENGTHS = {
     AD: 24,
@@ -130,6 +111,19 @@ chargeVat[0].addEventListener("change", (e) => {
   } else {
 
     document.getElementsByName("vat-rate")[0].setAttribute("hidden", "true");
+  }
+
+})
+
+const retainIrs = document.getElementsByName("retainIrs");
+console.log(retainIrs[0].checked);
+
+retainIrs[0].addEventListener("change", (e) => {
+  if (e.srcElement.checked) {
+    document.getElementsByName("irs-rate")[0].removeAttribute("hidden");
+  } else {
+
+    document.getElementsByName("irs-rate")[0].setAttribute("hidden", "true");
   }
 
 })
