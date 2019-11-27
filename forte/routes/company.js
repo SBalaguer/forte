@@ -82,8 +82,12 @@ router.get('/:url', (req, res, next) => {
   const url = req.params.url;
   Company.findOne({url:url})
   .then(company =>{
-    // console.log(company);
-    res.render('./companylandingpage', { company });
+    console.log(company);
+    if (!company) {
+      next(new Error('That company does not exist'));
+    } else { 
+      res.render('./companylandingpage', { company });
+    }
   })
   .catch(error =>{
     next(error);
