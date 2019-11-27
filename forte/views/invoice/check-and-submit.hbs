@@ -16,14 +16,11 @@
         <p>Date of Completion: {{date invoice.dateOfCompletion}}</p>
         <hr>
         <p>Amount Due: {{invoice.amountDue}}</p>
-        <p>Do you Charge VAT: {{invoice.vat.chargeVat}}</p>
-        {{#if invoice.vat.chargeVat}}
-        <p>Vat amount: {{invoice.vat.rate}}</p>
-        {{/if}}
-        <p>Do you Retain IRS: {{invoice.irs.retention}}</p>
-        {{#if invoice.irs.retention}}
-        <p>IRS Amount: {{invoice.irs.rate}}</p>
-        {{/if}}
+        <p>VAT: {{invoice.vat}}</p>
+        
+     
+        <p>IRS: {{invoice.irs}}</p>
+        
         <p>Extra Comments: {{invoice.comment}}</p>
     </div>
     {{!-- <div class="card-footer level content">

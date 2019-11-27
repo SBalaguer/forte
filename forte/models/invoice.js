@@ -39,24 +39,14 @@ const schema = new mongoose.Schema({
     required: true
   },
   vat: {
-    chargeVat: {
-      type: Boolean,
-      required: true
-    },
-    rate: {
-      type: Number,
-      enum: [18, 23]
-    }
+    type: String,
+    required: true,
+    enum: ["Does not Charge Vat", "23", "18"]
   },
   irs: {
-    retention: {
-      type: Boolean,
-      required: true
-    },
-    rate: {
-      type: Number,
-      enum: [25, 30]
-    }
+    type: String,
+    required: true,
+    enum: ["Does not Charge IRS", "23", "18"]
   },
   amountToTransfer: {
     type: Number

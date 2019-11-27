@@ -66,6 +66,8 @@ router.post('/:url/submission', uploader.single('pdf'), (req, res, next) => {
     jobDescription,
     hiredByPerson,
     amountDue,
+    vat,
+    irs,
     dateOfCompletion,
     comment
   } = req.body;
@@ -88,14 +90,8 @@ router.post('/:url/submission', uploader.single('pdf'), (req, res, next) => {
         hiredByPerson,
         amountDue,
         dateOfCompletion,
-        vat: {
-          chargeVat: req.body.chargeVat,
-          rate: 18
-        },
-        irs: {
-          retention: req.body.retainIrs,
-          rate: 25
-        },
+        vat,
+        irs,
         comment,
         pdf: req.file.path,
         status: 'unapproved',
@@ -205,6 +201,10 @@ router.post('/:url/submission/:invoiceId/edit', uploader.single('pdf'), (req, re
     hiredByPerson,
     amountDue,
     dateOfCompletion,
+    vat,
+    irs,
+
+
     comment
   } = req.body;
   Invoice.findByIdAndUpdate(invoiceId, {
@@ -216,14 +216,9 @@ router.post('/:url/submission/:invoiceId/edit', uploader.single('pdf'), (req, re
       hiredByPerson,
       amountDue,
       dateOfCompletion,
-      vat: {
-        chargeVat: req.body.chargeVat,
-        rate: 18
-      },
-      irs: {
-        retention: req.body.retainIrs,
-        rate: 25
-      },
+      vat,
+      irs,
+
       comment,
       pdf: req.file.path
     })
