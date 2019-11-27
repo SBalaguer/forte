@@ -124,6 +124,7 @@ router.get('/sign-in', (req,res,next) =>{
 router.post('/sign-in', (req,res,next) =>{
   const { adminEmail, password } = req.body;
   let userId;
+  let userRole;
   let companyUrl;
   User.findOne({email: adminEmail})
   .populate('companyId')
@@ -131,6 +132,7 @@ router.post('/sign-in', (req,res,next) =>{
     // console.log(user);
     if (user) {
       userId = user._id;
+      userRole = user.role;
       companyUrl = user.companyId.url;
       console.log('This is the info of the user logging-in',userId, companyUrl);
       return bcryptjs.compare(password, user.passwordHash);
@@ -142,7 +144,17 @@ router.post('/sign-in', (req,res,next) =>{
     if (response) {
         console.log('user has loggedin');
         req.session.user = userId;
-        res.redirect(`/${companyUrl}/profile/approved`);
+        switch(userRole){
+          case "Administrator":
+            res.redirect(`/${companyUrl}/profile/approved`);
+            break;
+          case "Payer":
+            res.redirect(`/${companyUrl}/profile/approved`);
+            break;
+          case "Controller":
+            res.redirect(`/${companyUrl}/profile/unapproved`);
+            break;
+        }
     } else {
         return Promise.reject(new Error('Wrong password.'));
     }
