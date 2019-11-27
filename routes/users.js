@@ -6,6 +6,7 @@ const router = new Router();
 const Company = require('./../models/company.js');
 const Invoice = require('./../models/invoice.js');
 const User = require('./../models/user.js');
+const bcryptjs = require('bcryptjs');
 const nodemailer = require('nodemailer');
 
 //******************************************************************************************
@@ -38,6 +39,7 @@ router.post('/:url/settings/new-user',(req,res,next) =>{
     let companyId = "";
     const companyUrl = req.params.url;
     const firstPass = createRandom(6);
+    let hashPass = "";
     const verificationToken = createRandom(14);
     const {
         name,
@@ -45,15 +47,21 @@ router.post('/:url/settings/new-user',(req,res,next) =>{
         role
       } = req.body;
     // console.log(req.body);
-    Company.findOne({url: companyUrl})
+    bcryptjs
+    .hash(firstPass, 10)
+    .then(hash =>{
+      hashPass = hash
+      return Company.findOne({url: companyUrl})
+    })
     .then(company =>{
       companyId = company._id;
+      console.log(companyId)
       return User.create({
         name,
         email,
         role,
         companyId,
-        passwordHash: firstPass,
+        passwordHash: hashPass,
         verificationStatus: false,
         verificationToken: verificationToken
       });
@@ -111,6 +119,27 @@ router.get('/users/confirm/:token', (req,res,next) =>{
         // console.log(req.session.user);
         // console.log(req.session)
       });
+});
+
+//******************************************************************************************
+//DELETING USERS
+
+router.post('/users/delete/:id', (req,res,next) =>{
+  const userId = req.params.id;
+  let companyUrl = "";
+  User.findById(userId)
+  .populate("companyId")
+  .then(user =>{
+    companyUrl = user.companyId.url
+    return User.findByIdAndDelete(userId)
+  })
+  .then(()=>{
+    console.log('A user has been deleted')
+    res.redirect(`/${companyUrl}/settings`);
+  })
+  .catch(error =>{
+    next(error);
+  });
 });
 
 

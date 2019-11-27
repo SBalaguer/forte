@@ -43,3 +43,40 @@ body {
 input:invalid {
   border-color: red;
 }
+
+.tile{
+  margin-bottom: 1em;
+}
+
+.settings-header{
+  display: flex; 
+  flex-direction: row; 
+  align-items:center; 
+  justify-content:space-between;
+}
+
+.settings-body{
+  margin-top: 1em;
+  display: flex; 
+  flex-direction: row; 
+  align-items:flex-start; 
+  justify-content:space-between; 
+  width: 95%"
+}
+
+.settings-half{
+  width: 50%;
+  margin-left: 1em;
+}
+
+.user-half-title{
+  margin-bottom: 1em;
+}
+
+.settings-half .btn-light{
+  margin-top: 1em;
+}
+
+.settings-half:nth-of-type(2) .content{
+  margin-top: 0.7em;
+}

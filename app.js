@@ -54,6 +54,14 @@ hbs.registerHelper("ifvalue", function(conditional, options) {
   }
 });
 
+hbs.registerHelper("unvalue", function(conditional, options) {
+  if (conditional == options.hash.equals) {
+    return options.inverse(this);
+  } else {
+    return options.fn(this);
+  }
+});
+
 app.use(
   expressSession({
     secret: process.env.SESSION_SECRET,

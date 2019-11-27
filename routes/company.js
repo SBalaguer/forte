@@ -61,12 +61,12 @@ router.get('/:url/settings' , isSignedIn, (req, res, next) => {
   .then(companyData =>{
     company = companyData;
     companyId = company._id;
-    console.log("this is the companyId", companyId);
+    // console.log("this is the companyId", companyId);
     return User.find({companyId: companyId});
   })
   .then(usersInCompany =>{
-    console.log('company:', company);
-    console.log('users:', usersInCompany);
+    // console.log('company:', company);
+    // console.log('users:', usersInCompany);
     res.render('./dashboard/settings', { company , usersInCompany });
   })
   .catch(error =>{

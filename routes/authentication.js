@@ -133,8 +133,7 @@ router.post('/sign-in', (req,res,next) =>{
       userId = user._id;
       companyUrl = user.companyId.url;
       console.log('This is the info of the user logging-in',userId, companyUrl);
-      //return bcryptjs.compare(password, user.passwordHash);
-      return true;
+      return bcryptjs.compare(password, user.passwordHash);
     } else {
         return Promise.reject(new Error('Username does not exist.')); 
     }

@@ -1,41 +1,81 @@
-<div class="settings-header" style="display: flex; flex-direction: row; align-items:center; justify-content:space-between;">
+<div class="settings-header">
     <div>
         <h2>Settings</h2>
     </div>
     <div>
         <figure class="avatar avatar--large">
-            <img src="{{company.logoUrl}}" alt="">
+            <a href="/{{company.url}}/profile/approved"><img src="{{company.logoUrl}}" alt=""></a>
         </figure>
     </div>
 </div>
 
-<div style="display: flex; flex-direction: row; align-items:center; justify-content:space-between; width: 95%">
-    <div style="width: 50%">
-
-    </div>
-    <div style="width: 50%;">
-        <h6 style="margin-bottom: 1em;">Existing Users</h6>
-        {{#each usersInCompany}}
-            <div class="tile">
-                <div class="tile__icon">
-                    <figure class="avatar">
-                        <img src="{{this.profilePicUrl}}">
-                    </figure>
-                </div>
-                <div class="tile__container">
-                    <p class="tile__subtitle u-no-margin">Name: {{this.name}}</p>
-                    <p class="tile__subtitle u-no-margin">Role: {{this.role}}</p>
-                    <p class="tile__buttons u-no-margin">
-                        <button class="btn-tiny uppercase">Change Role</button>
-                        <button class="btn-primary btn-tiny uppercase">Remove User</button>
-                    </p>
-                </div>
+<div class ="settings-body">
+    <div class="settings-half">
+        <div class="card">
+            <div class="card-head">
+                <p class="card-head-title">Company Details</p>
             </div>
-        {{/each}}
-        <a href="#create-user"><button class="btn-success btn-small">Add new User</button></a>
+            <div class="content">
+                <form action="" method="POST">
+                    <label for="companyName">Company Name:</label>
+                    <input type="text" name="companyName" id="companyName" placeholder="{{company.companyName}}"/>
+                    <br>
+                    <label for="adminEmail">Administrator Email:</label>
+                    <input type="email" name="adminEmail" id="adminEmail" placeholder="{{company.adminEmail}}"/>
+                    <br>
+                    <label for="url">forte.com/</label>
+                    <input type="text" name="url" id="url" placeholder="yourcompany"/>
+                    <br>
+                    <h6>Address</h6>
+                    <label for="street">Street Name:</label>
+                    <input type="text" name="street" id="street" "{{company.address.street}}">
+                    <br>
+                    <label for="number">Door Number:</label>
+                    <input type="text" name="number" id="number" placeholder="{{company.address.number}}"/>
+                    <br>
+                    <label for="city">City:</label>
+                    <input type="text" name="city" id="city" placeholder="{{company.address.city}}"/>
+                    <br>
+                    <h6>Fiscal Details</h6>
+                    <label for="NIPC">NIPC</label>
+                    <input type="number" name="NIPC" id="nipc" placeholder="{{company.NIPC}}"/>
+                    <br>
+                    <button class="btn-light">Submit Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="settings-half">
+        <div class="card">
+            <div class="card-head">
+                <p class="card-head-title">Company Details</p>
+            </div>
+            <div class="content">
+                {{#each usersInCompany}}
+                    <div class="tile">
+                        <div class="tile__icon">
+                            <figure class="avatar">
+                                <img src="{{this.profilePicUrl}}">
+                            </figure>
+                        </div>
+                        <div class="tile__container">
+                            <p class="tile__subtitle u-no-margin">Name: {{this.name}}</p>
+                            <p class="tile__subtitle u-no-margin">Role: {{this.role}}</p>
+                            {{!-- REMOVING THIS BUTTONS FOR ADMINS --}}
+                            {{#unvalue this.role equals="Administrator"}}
+                            <p class="tile__buttons u-no-margin">
+                                <a href="#edit-user"><button class="btn-tiny uppercase">Change Role</button></a>
+                                <a href="#delete-user-{{this._id}}"><button class="btn-primary btn-tiny uppercase">Remove User</button></a>
+                            </p>
+                            {{/unvalue}}
+                        </div>
+                    </div>
+                {{/each}}
+                <a href="#create-user"><button class="btn-success btn-small">Add new User</button></a>            
+            </div>
+        </div>
     </div>
 </div>
-
 
 
 {{!-- Modal to create new User --}}
@@ -63,3 +103,26 @@
         </div>
     </div>
 </div>
+
+{{!-- Modal to delete User --}}
+{{#each usersInCompany}}
+
+<div class="modal modal-animated--zoom-in" id="delete-user-{{this._id}}">
+    <a href="#target" class="modal-overlay close-btn" aria-label="Close"></a>
+    <div class="modal-content" role="document">
+        <div class="modal-header">
+            <a href="#components" class="pull-right" aria-label="Close"><span class="icon"><i class="fa fa-wrapper fa-times"></i></span></a>
+        </div>
+        <div class="modal-body">
+            <h4>You are about to delete the following User:</h4>
+            <p>Name: {{this.name}}</p>
+            <p>Email: {{this.email}}</p>
+            <p>Role: {{this.role}}</p>
+            <form action="/users/delete/{{this._id}}" method="POST">
+                <button class="btn-danger">Delete User</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{/each}}
