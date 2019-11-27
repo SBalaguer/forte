@@ -106,18 +106,6 @@ router.post('/:url/submission', uploader.single('pdf'), (req, res, next) => {
       invoiceId = invoice._id
       res.redirect(`/${companyUrl}/submission/${invoiceId}`);
     })
-    .then(
-      transporter.sendMail({
-        from: `FORTE <${process.env.NODEMAIL_MAIL}>`,
-        to: req.body.email,
-        subject: 'Your payment has been submited to',
-        //text: 'This should be the body of the text email'
-        html: `
-        </style>
-        <h1 style="color: Black">Thanks for using Forte!</h1>
-        <p><strong>Follow</strong> your payment in our website</p>
-      `
-      }))
     .catch(error => {
       next(error);
     });
@@ -149,8 +137,34 @@ router.get('/:url/submission/:invoiceId', (req, res, next) => {
 });
 
 router.get('/:url/submission/:invoiceId/thanks', (req, res, next) => {
-  res.render('./invoice/thanks');
+  const invoiceId = req.params.invoiceId;
+  let contractorEmail = "";
+  Invoice.findById(invoiceId)
+  .then(invoice =>{
+    contractorEmail = invoice.email;
+    // console.log(contractorEmail);
+    //console.log('This is the contractor Email:', contractorEmail)
+    transporter.sendMail({
+      from: `FORTE <${process.env.NODEMAIL_MAIL}>`,
+      to: contractorEmail,
+      subject: 'Your payment has been submited to',
+      //text: 'This should be the body of the text email'
+      html: `
+      </style>
+      <h1 style="color: Black">Thanks for using Forte!</h1>
+      <a href="http://localhost:3000/invoices/view/${invoiceId}">Follow Payment Status</a>
+    `
+    });
+  })
+  .then(()=>{
+    res.render('./invoice/thanks');
+  })
+  .catch(error =>{
+    next(error);
+  });
 });
+
+{/* <p><strong>Follow</strong> your payment in our website</p> */}
 
 //******************************************************************************************
 //EDITING INVOICE
@@ -234,7 +248,7 @@ router.post('/:url/submission/:invoiceId/delete', (req, res, next) => {
     });
 });
 //******************************************************************************************
-//status change from approved to reject
+//STATUS CHANGED FROM CURRENT TO NEW
 
 router.post('/:id/:action', (req, res, next) => {
   const id = req.params.id;
@@ -260,6 +274,20 @@ router.post('/:id/:action', (req, res, next) => {
   }).catch(err => {
     next(err);
   });
+});
+
+//******************************************************************************************
+//FINDING A SINGLE INVOICE
+
+router.get('/invoices/view/:invoiceId', (req, res, next) => {
+  const invoiceId = req.params.invoiceId;
+  Invoice.findById(invoiceId)
+    .then(invoice => {
+      res.render('./invoice/single-invoice', {invoice});
+    })
+    .catch(error => {
+      next(error);
+    });
 });
 
 //******************************************************************************************
