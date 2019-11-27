@@ -1,5 +1,29 @@
-<h1>Welcome to {{company.companyName}}.</h1>
+{{!-- <h1>Welcome to {{company.companyName}}.</h1>
 <img src={{company.logoUrl}} width="200px" alt="logo"/>
 <p>Thank you for the good job. Here are some instructions. Press below when ready to submit.</p>
 <a href="/{{company.url}}/submission"><button>Submit Invoice</button></a>
 <a href='/{{company.url}}/profile/approved'>Company Login</a>
+ --}}
+<div class="hero fullscreen" style="height:90%">
+    <div class="hero-body u-center">
+        <div class="w-95" style="position: relative">
+            <div class="row level">
+                <div class="col-6" style="padding: 2rem;">
+                    <h1 class="headline-4">Welcome to {{company.companyName}} payment app.</h1>
+                    <p class="lead">In here you will be able to submit your invoices so that we can pay them.</p>
+                    <div class="r">
+                        <b>Please <div class="tag tag--link">Submit</div> your invoice below</b>
+                    </div>
+                    <div class="form-group">
+                        <a href="/{{company.url}}/submission"><button class="btn-link">Submit Invoice</button></a>
+                    </div>
+                     <a href="/{{company.url}}/profile/approved"><small>Company Login</small></a>
+                </div>
+                <div class="divider divider--v"></div>
+                <div class="col-6" style="padding: 2rem;">
+                    <img  src="{{company.logoUrl}}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

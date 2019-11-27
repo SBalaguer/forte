@@ -18,7 +18,7 @@
     <td>{{amountDue}}</td>
     <td><a href="/invoices/{{this._id}}/"><button>View</button></a></td>
     <td><form method="POST" action="/{{this._id}}/approved"><button class="btn">Approve</button></form></td>
-   <td><form method="POST" action="/{{this._id}}/rejected"><button class="btn-danger">Reject</button></form></td>
+    <td><form method="POST" action="/{{this._id}}/rejected"><button class="btn-danger">Reject</button></form></td>
     <td><a href="#process-payment-{{this._id}}"><button class="btn-success">Pay</button></td></a>
   </tr>
   {{/each}}
@@ -29,22 +29,18 @@
 <div class="modal modal-animated--zoom-in" id="process-payment-{{this._id}}">
     <a href="#target" class="modal-overlay close-btn" aria-label="Close"></a>
     <div class="modal-content" role="document">
-        <div class="modal-header">
-            <a href="#components" class="pull-right" aria-label="Close"><span class="icon"><i class="fa fa-wrapper fa-times"></i></span></a>
-            <div class="modal-title">Process Payment: {{this._id}}</div>
-        </div>
-        <div class="modal-body">
-          <input id="iban-{{this.iban}}" type="text" value="{{this.iban}}">
-          <button onclick="copyToClipboard({{this.iban}})">Copy to Clipboard</button>
-          <button>Visit Bank</button>
-    <form method="POST" action="/{{this._id}}/paid"><button class="btn-success">Payment Processed</button></form>
-
-
-            <!-- Modal content -->
-        </div>
-        <div class="modal-footer">
-            <!-- Rows, buttons, etc... -->
-        </div>
+      <div class="modal-header">
+          <a href="#components" class="pull-right" aria-label="Close"><span class="icon"><i class="fa fa-wrapper fa-times"></i></span></a>
+          <div class="modal-title">Process Payment: {{this._id}}</div>
+      </div>
+      <div class="modal-body">
+        <input id="iban-{{this.iban}}" type="text" value="{{this.iban}}">
+        <button onclick="copyToClipboard({{this.iban}})">Copy to Clipboard</button>
+        <button>Visit Bank</button>
+        <form method="POST" action="/{{this._id}}/paid">
+          <button class="btn-success">Payment Processed</button>
+        </form>
+      </div>
     </div>
 </div>
 {{/each}}

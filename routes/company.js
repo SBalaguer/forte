@@ -74,6 +74,39 @@ router.get('/:url/settings' , isSignedIn, (req, res, next) => {
   });
 });
 
+//******************************************************************************************
+//EDIT COMPANY ROUTE
+
+router.post('/:url/settings/edit', isSignedIn, (req,res,next) =>{
+  const { companyName, adminEmail, street, number, city, NIPC } = req.body;
+  const companyUrl = req.params.url;
+  let company = {};
+  Company.findOneAndUpdate({url: companyUrl},{
+    companyName,
+    adminEmail,
+    address: {
+        street: street,
+        number: number,
+        city: city
+    },
+    NIPC,
+  })
+  .then(companyData =>{
+    company = companyData;
+    const companyId = company._id;
+    return User.find({companyId: companyId});
+  })
+  .then(usersInCompany =>{
+    // console.log('company:', company);
+    // console.log('users:', usersInCompany);
+    res.redirect(`/${companyUrl}/settings`);
+  })
+  .catch(error =>{
+    next(error);
+  });
+});
+
+
 
 //******************************************************************************************
 //COMPANY URL VIEW

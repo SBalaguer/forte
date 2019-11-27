@@ -17,8 +17,6 @@
         <hr>
         <p>Amount Due: {{invoice.amountDue}}</p>
         <p>VAT: {{invoice.vat}}</p>
-        
-     
         <p>IRS: {{invoice.irs}}</p>
         
         <p>Extra Comments: {{invoice.comment}}</p>
@@ -28,7 +26,7 @@
     </div> --}}
     <div class="action-bar u-center">
         <a href="/{{companyData.url}}/submission/{{invoice._id}}/thanks"><button class="btn-success">Submit</button></a>
-        <a href="/{{companyData.url}}/submission/{{invoice._id}}/edit"><button class="btn">Edit</button></a>
+        <a href="/{{companyData.url}}/submission/{{invoice._id}}/edit"><button class="btn-light">Edit</button></a>
         <form action="/{{companyData.url}}/submission/{{invoice._id}}/delete" method="POST">
             <button class="btn-danger">Delete</button>
         </form>

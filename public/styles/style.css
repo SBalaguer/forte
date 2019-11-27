@@ -80,3 +80,26 @@ input:invalid {
 .settings-half:nth-of-type(2) .content{
   margin-top: 0.7em;
 }
+
+.index-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  width: 90%;
+  margin: auto;
+  margin-top: 5em;
+}
+
+.index-container h1{
+  margin-bottom: 0.6em;
+}
+
+.selling-line{
+  width: 87%;
+  margin-bottom: 1em;
+}
+
+.selling-line strong{
+  color: #fab633;
+}

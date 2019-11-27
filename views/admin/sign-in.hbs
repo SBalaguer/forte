@@ -1,10 +1,13 @@
-<h1>Admin Login</h1>
-<form action="/sign-in" method="POST">
-<label for="adminEmail">Email:</label>
-<input type="email" name="adminEmail" id="adminEmail" placeholder="you@yourcompany.com"/>
-<br>
-<label for="password">Password:</label>
-<input type="password" name="password" id="password" placeholder=""/>
-<br>
-<button>Login</button>
-</form>
+<h1>Company Login</h1>
+
+<div class="w-50">
+    <form action="/sign-in" method="POST">
+        <div class="input-control">
+            <input type="email" class="input-contains-icon" name="adminEmail" placeholder="Email"/><span class="icon"><i class="fa fa-wrapper fa-envelope"></i></span>
+        </div>
+        <div class="input-control">
+            <input type="password" class="input-contains-icon" name="password" placeholder="Password"/><span class="icon"><i class="fa fa-wrapper fa-lock"></i></span>
+        </div>
+        <button>Login</button>
+    </form>
+</div>

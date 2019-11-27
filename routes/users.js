@@ -142,6 +142,27 @@ router.post('/users/delete/:id', (req,res,next) =>{
   });
 });
 
+//******************************************************************************************
+//EDITING USERS
+
+router.post('/users/edit/:id', (req,res,next) =>{
+  const userId = req.params.id;
+  const role = req.body.role;
+  let companyUrl = "";
+  User.findByIdAndUpdate(userId, { role })
+  .populate("companyId")
+  .then(user =>{
+    companyUrl = user.companyId.url
+  })
+  .then(()=>{
+    //console.log('A user has been deleted')
+    res.redirect(`/${companyUrl}/settings`);
+  })
+  .catch(error =>{
+    next(error);
+  });
+});
+
 
 
 module.exports = router;

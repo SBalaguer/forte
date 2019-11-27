@@ -134,6 +134,7 @@ router.get('/:url/submission/:invoiceId', (req, res, next) => {
 
 router.get('/:url/submission/:invoiceId/thanks', (req, res, next) => {
   const invoiceId = req.params.invoiceId;
+  const companyUrl = req.params.url
   let contractorEmail = "";
   Invoice.findById(invoiceId)
     .then(invoice => {
@@ -153,7 +154,7 @@ router.get('/:url/submission/:invoiceId/thanks', (req, res, next) => {
       });
     })
     .then(() => {
-      res.render('./invoice/thanks');
+      res.render('./invoice/thanks', {companyUrl});
     })
     .catch(error => {
       next(error);
@@ -203,8 +204,6 @@ router.post('/:url/submission/:invoiceId/edit', uploader.single('pdf'), (req, re
     dateOfCompletion,
     vat,
     irs,
-
-
     comment
   } = req.body;
   Invoice.findByIdAndUpdate(invoiceId, {
