@@ -16,27 +16,32 @@ router.get('/:url/profile/:status', isSignedIn, (req, res, next) => {
   //console.log('The company ID is:',req.session.company);
   const companyUrl = req.params.url;
   const invoiceStatus = req.params.status;
-  let comp = {};
-  Company.findOne({url:companyUrl})
-  .then(company =>{
-    const companyId = company._id;
-    comp = company;
+  const userId = req.session.user;
+  // console.log(userId);
+  let user = {};
+  User.findById(userId)
+  .populate('companyId')
+  .then(userAndCompany => {
+    user = userAndCompany;
+    // console.log('this is the user: ',user);
+    const companyId = user.companyId._id;
+    // console.log('this is the company ID: ', companyId);
     return Invoice.find({companyWorkedFor: companyId, status: invoiceStatus});
   })
   .then(invoices =>{
-    console.log(comp, invoices);
+    // console.log(comp, invoices);
     switch (invoiceStatus) {
       case "approved":
-        res.render('./dashboard/approved', { comp, invoices });
+        res.render('./dashboard/approved', { user, invoices });
         break;
       case "unapproved":
-        res.render('./dashboard/unapproved', { comp, invoices });
+        res.render('./dashboard/unapproved', { user, invoices });
         break;
       case "rejected":
-        res.render('./dashboard/rejected', { comp, invoices });
+        res.render('./dashboard/rejected', { user, invoices });
         break;
       case "paid":
-        res.render('./dashboard/paid', { comp, invoices });
+        res.render('./dashboard/paid', { user, invoices });
         break;
     }
   })

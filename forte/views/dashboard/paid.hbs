@@ -1,11 +1,10 @@
 {{>dashboardHeading}}
-    <h5>Admin Dashboard</h5>
     <div id="tab-container" class="tab-container tabs-large tabs-classic tabs-fill tabs-center">
         <ul>
-            <li><a href="/{{comp.url}}/profile/approved">Approved</a> </li>
-            <li><a href="/{{comp.url}}/profile/unapproved">Unapproved</a></li>
-            <li><a href="/{{comp.url}}/profile/rejected">Rejected</a></li>
-            <li class="selected"><a href="/{{comp.url}}/profile/paid"> Paid</a></li>
+            <li><a href="/{{user.companyId.url}}/profile/approved">Approved</a> </li>
+            <li><a href="/{{user.companyId.url}}/profile/unapproved">Unapproved</a></li>
+            <li><a href="/{{user.companyId.url}}/profile/rejected">Rejected</a></li>
+            <li class="selected"><a href="/{{user.companyId.url}}/profile/paid"> Paid</a></li>
         </ul>
     </div>
 {{>paymentPartial}}
