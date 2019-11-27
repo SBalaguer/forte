@@ -39,3 +39,7 @@ body {
 .buttons-dashboard-header button{
   margin-left: 1em;
 }
+
+input:invalid {
+  border-color: red;
+}

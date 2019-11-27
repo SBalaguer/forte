@@ -3,49 +3,64 @@
     <img src={{company.logoUrl}} />
 </figure>
 
+
 <h4>Invoice Submission</h4>
 <form action="/{{company.url}}/submission" method="POST" enctype="multipart/form-data">
+    
     <label for="name">Name</label>  
     <input type="text" required name="contractorName">
     
     <label for="email">Email</label>  
-    <input type="email" name="email">
+    <input type="email" required name="email">
     
     <label for="cellphone">Cellphone</label>  
-    <input type="text" name="cellphone">
+    <input type="text" required name="cellphone">
     
     <label for="iban">IBAN</label>  
-    <input type="text" pattern="^([A-Z]{2})( ?\d{1,4})+$" name="iban">
+    <input type="text" required pattern="^([A-Z]{2})( ?\d{1,4})+$" name="iban">
+    <p class="hint" id="iban-hint"></p>
     
     <label for="jobDescription">Job Description</label>  
-    <input type="text" name="jobDescription">
+    <input type="text" required name="jobDescription">
     
     <label for="hiredByPerson">Person of Contact</label>  
-    <input type="text" name="hiredByPerson">
+    <input type="text" required name="hiredByPerson">
     
-    <label for="amountDue">Amount Due</label>  
-    <input type="number" name="amountDue">
+    <label for="amountDue">Amount Due (no Taxes added or subtracted)</label>  
+    <input type="number" required name="amountDue">
     
     <label for="dateOfCompletion">Date of Completion</label>  
     <input type="date" name="dateOfCompletion">
     
     <label for="chargeVat">Do you charge VAT?</label>
-    <input type="radio" name="chargeVat" value="true">Yes
-    <input type="radio" name="chargeVat" value="false">No
+    <input type="checkbox" name="chargeVat" >
+    <select name="vat-rate" hidden>
+       
+        <option value="18%">23%</option>
+        <option value="18%">22%</option>
+        <option value="18%">18%</option>
+        <option value="13%">13%</option>
+        <option value="12%">12%</option>
+        <option value="9%">9%</option>
+        <option value="6%">6%</option>
+        <option value="5%">5%</option>
+        <option value="4%">4%</option>
+    </select>
     <br>
     
     <label for="retainIrs">Do you retain IRS?</label>
-    <input type="radio" name="retainIrs" value="true">Yes
-    <input type="radio" name="retainIrs" value="false">No<br>
+    <input type="checkbox" name="retainIrs" value="true">
+    
 
     <label for="comment">Extra Comments</label>
     <input type="text" name="comment">
 
     <label for="pdf">Add your Invoice below</label>
     <input type="file" name="pdf">
-    <button>Submit</button>
+    <button id="submit" disabled>Submit</button>
 </form>
 
+<script src="/scripts/inputvalidation.js"></script>
 
 
 
