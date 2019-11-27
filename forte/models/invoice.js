@@ -1,7 +1,7 @@
 'use strict';
-
+​
 const mongoose = require('mongoose');
-
+​
 const schema = new mongoose.Schema({
   contractorName: {
     type: String,
@@ -41,12 +41,12 @@ const schema = new mongoose.Schema({
   vat: {
     type: String,
     required: true,
-    enum: ["Does not Charge Vat", "23", "18"]
+    enum: ["Does not Charge Vat", "23", "10"]
   },
   irs: {
     type: String,
     required: true,
-    enum: ["Does not Charge IRS", "23", "18"]
+    enum: ["Does not Charge IRS", "25", "10"]
   },
   amountToTransfer: {
     type: Number
@@ -69,5 +69,5 @@ const schema = new mongoose.Schema({
 }, {
   timestamps: true
 });
-
+​
 module.exports = mongoose.model('Invoice', schema);

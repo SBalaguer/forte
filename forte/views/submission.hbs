@@ -2,8 +2,8 @@
 <figure class="avatar avatar">
     <img src={{company.logoUrl}} />
 </figure>
-
-
+​
+​
 <h4>Invoice Submission</h4>
 <form action="/{{company.url}}/submission" method="POST" enctype="multipart/form-data">
     
@@ -27,42 +27,42 @@
     <input type="text" required name="hiredByPerson">
     
     <label for="amountDue">Amount Due (no Taxes added or subtracted)</label>  
-    <input type="number" required name="amountDue">
+    <input id="amountDue" type="number" required name="amountDue">
     
     <label for="dateOfCompletion">Date of Completion</label>  
     <input type="date" name="dateOfCompletion">
     
    <label for="vat">VAT</label>
-    <select name="vat">
+    <select name="vat" id="vat">
        
         <option value="Does not Charge Vat">Does not charge VAT</option>
         <option value="23">23%</option>
-        <option value="18">18%</option>
+        <option value="10">10%</option>
       
     </select>
     <br>
-
+​
     <label for="irs">IRS</label>
-    <select name="irs">
+    <select name="irs" id="irs">
        
         <option value="Does not Charge IRS">Does not charge IRS</option>
-        <option value="23">23%</option>
-        <option value="18">18%</option>
+        <option value="25">25%</option>
+        <option value="10">10%</option>
       
     </select>
     <br>
-   
- 
+   <label for="amountToTransfer">Amount to be transfered</label>
+ <input type="number" id="amountToTransfer" name="amountToTransfer" disabled>
   
-
+​
     <label for="comment">Extra Comments</label>
     <input type="text" name="comment">
-
+​
     <label for="pdf">Add your Invoice below</label>
     <input type="file" name="pdf">
     <button id="submit" disabled>Submit</button>
 </form>
-
+​
 <script src="/scripts/inputvalidation.js"></script>
 
 
