@@ -18,7 +18,7 @@ const schema = new mongoose.Schema({
   },
   role:{
     type: String,
-    enum: ['Payer', 'Controller', 'Admin']
+    enum: ['Payer', 'Controller', 'Administrator']
   },
   companyId:{
     type: mongoose.Types.ObjectId,

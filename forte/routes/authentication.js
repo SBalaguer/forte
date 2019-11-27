@@ -57,9 +57,12 @@ router.post('/sign-up', uploader.single('logoUrl') ,(req,res,next) =>{
     const { companyName, adminEmail, password, url, street, number, city, NIPC } = req.body;
     //console.log(req.body, req.file);
     const token = generateId(14);
+    let passHash = ''
+    let fullCompany={};
     bcryptjs
     .hash(password, 10)
     .then(hash => {
+      passHash = hash;
       return Company.create({
         companyName,
         passwordHash: hash,
@@ -75,10 +78,23 @@ router.post('/sign-up', uploader.single('logoUrl') ,(req,res,next) =>{
         verificationToken: token
       });
     })
-    .then(company => {
-        req.session.company = company._id;
+    .then(company =>{
+      const companyId = company._id;
+      fullCompany = company;
+      return User.create({
+        name: companyName,
+        adminEmail,
+        role: 'Administrator',
+        companyId,
+        passwordHash: passHash,
+        verificationStatus: false,
+        verificationToken: token
+      });
+    })
+    .then(User => {
+        req.session.company = fullCompany._id;
         // console.log('Created user', company);
-        res.redirect(`/${company.url}/profile/approved`);
+        res.redirect(`/${fullCompany.url}/profile/approved`);
     })
     .then(
       transporter.sendMail({
