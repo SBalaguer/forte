@@ -67,21 +67,9 @@ app.use(
 
 app.use((req, res, next) => {
   // console.log('im running!')
-  const companyId = req.session.company;
   const userId = req.session.user;
   //console.log('session check, company ID: ', companyId);
-  if (companyId) {
-    Company.findById(companyId)
-      .then(signedCompany => {
-        // console.log('logged in user is', signedCompany);
-        req.company = signedCompany;
-        res.locals.company = req.company;
-        next();
-      })
-      .catch(error => {
-        next(error);
-      });
-  } else if (userId) {
+  if (userId) {
     User.findById(userId)
       .then(signedUser => {
         // console.log('logged in user is', signedCompany);

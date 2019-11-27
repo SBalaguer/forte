@@ -12,7 +12,7 @@ const isSignedIn = require('./../middleware/route-guard.js');
 //******************************************************************************************
 //DASHBOARD VIEWS
 
-router.get('/:url/profile/:status', isSignedIn ,(req, res, next) => {
+router.get('/:url/profile/:status', isSignedIn, (req, res, next) => {
   //console.log('The company ID is:',req.session.company);
   const companyUrl = req.params.url;
   const invoiceStatus = req.params.status;
@@ -24,7 +24,7 @@ router.get('/:url/profile/:status', isSignedIn ,(req, res, next) => {
     return Invoice.find({companyWorkedFor: companyId, status: invoiceStatus});
   })
   .then(invoices =>{
-    //console.log(comp, invoices);
+    console.log(comp, invoices);
     switch (invoiceStatus) {
       case "approved":
         res.render('./dashboard/approved', { comp, invoices });
@@ -48,17 +48,21 @@ router.get('/:url/profile/:status', isSignedIn ,(req, res, next) => {
 //******************************************************************************************
 //COMPANY SETTINGS VIEW
 
-router.get('/:url/settings', isSignedIn , (req, res, next) => {
-  // const companyUrl = req.params.url;
-  const companyId = (req.session.company);
-  let usersInCompany = {};
-  User.find({companyId: companyId})
-  .then(usersList =>{
-    usersInCompany = usersList;
-    return Company.findById(companyId);
+router.get('/:url/settings' , isSignedIn, (req, res, next) => {
+  const companyUrl = req.params.url;
+  let companyId = "";
+  let company = {};
+  Company.findOne({url: companyUrl})
+  .then(companyData =>{
+    company = companyData;
+    companyId = company._id;
+    console.log("this is the companyId", companyId);
+    return User.find({companyId: companyId});
   })
-  .then(company => {
-    res.render('./dashboard/settings', { company, usersInCompany });
+  .then(usersInCompany =>{
+    console.log('company:', company);
+    console.log('users:', usersInCompany);
+    res.render('./dashboard/settings', { company , usersInCompany });
   })
   .catch(error =>{
     next(error);

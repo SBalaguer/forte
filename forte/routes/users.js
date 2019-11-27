@@ -35,7 +35,7 @@ const createRandom = (length) => {
 //******************************************************************************************
 //SETING UP USER CREATOR
 router.post('/:url/settings/new-user',(req,res,next) =>{
-    const companyId = req.session.company;
+    let companyId = "";
     const companyUrl = req.params.url;
     const firstPass = createRandom(6);
     const verificationToken = createRandom(14);
@@ -45,7 +45,10 @@ router.post('/:url/settings/new-user',(req,res,next) =>{
         role
       } = req.body;
     // console.log(req.body);
-    User.create({
+    Company.findOne({url: companyUrl})
+    .then(company =>{
+      companyId = company._id;
+      return User.create({
         name,
         email,
         role,
@@ -53,6 +56,7 @@ router.post('/:url/settings/new-user',(req,res,next) =>{
         passwordHash: firstPass,
         verificationStatus: false,
         verificationToken: verificationToken
+      });
     })
     .then((newUser) =>{
         // console.log(newUser);

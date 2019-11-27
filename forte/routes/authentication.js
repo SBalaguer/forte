@@ -83,7 +83,7 @@ router.post('/sign-up', uploader.single('logoUrl') ,(req,res,next) =>{
       fullCompany = company;
       return User.create({
         name: companyName,
-        adminEmail,
+        email: adminEmail,
         role: 'Administrator',
         companyId,
         passwordHash: passHash,
@@ -91,8 +91,8 @@ router.post('/sign-up', uploader.single('logoUrl') ,(req,res,next) =>{
         verificationToken: token
       });
     })
-    .then(User => {
-        req.session.company = fullCompany._id;
+    .then(user => {
+        req.session.user = user._id;
         // console.log('Created user', company);
         res.redirect(`/${fullCompany.url}/profile/approved`);
     })
@@ -120,35 +120,67 @@ router.get('/sign-in', (req,res,next) =>{
   res.render('./admin/sign-in');
 });
 
+
 router.post('/sign-in', (req,res,next) =>{
   const { adminEmail, password } = req.body;
-  // console.log(req.body);
-  let companyId;
+  let userId;
   let companyUrl;
-  Company.findOne({adminEmail})
-  .then(company =>{
-      if (company) {
-        companyId = company._id;
-        companyUrl = company.url;
-        console.log('This is the info of the company logging-in',companyId, companyUrl);
-        return bcryptjs.compare(password, company.passwordHash);
-      } else {
-          return Promise.reject(new Error('Username does not exist.')); 
-      }
+  User.findOne({email: adminEmail})
+  .populate('companyId')
+  .then(user =>{
+    // console.log(user);
+    if (user) {
+      userId = user._id;
+      companyUrl = user.companyId.url;
+      console.log('This is the info of the user logging-in',userId, companyUrl);
+      return bcryptjs.compare(password, user.passwordHash);
+    } else {
+        return Promise.reject(new Error('Username does not exist.')); 
+    }
   })
   .then(response => {
-      if (response) {
-          console.log('user has loggedin');
-          req.session.company = companyId;
-          res.redirect(`/${companyUrl}/profile/approved`);
-      } else {
-          return Promise.reject(new Error('Wrong password.'));
-      }
+    if (response) {
+        console.log('user has loggedin');
+        req.session.user = userId;
+        res.redirect(`/${companyUrl}/profile/approved`);
+    } else {
+        return Promise.reject(new Error('Wrong password.'));
+    }
   })
   .catch((error) =>{
-      next(error);
+    next(error);
   });
 });
+
+// router.post('/sign-in', (req,res,next) =>{
+//   const { adminEmail, password } = req.body;
+//   // console.log(req.body);
+//   let companyId;
+//   let companyUrl;
+//   Company.findOne({adminEmail})
+//   .then(company =>{
+//       if (company) {
+//         companyId = company._id;
+//         companyUrl = company.url;
+//         console.log('This is the info of the company logging-in',companyId, companyUrl);
+//         return bcryptjs.compare(password, company.passwordHash);
+//       } else {
+//           return Promise.reject(new Error('Username does not exist.')); 
+//       }
+//   })
+//   .then(response => {
+//       if (response) {
+//           console.log('user has loggedin');
+//           req.session.company = companyId;
+//           res.redirect(`/${companyUrl}/profile/approved`);
+//       } else {
+//           return Promise.reject(new Error('Wrong password.'));
+//       }
+//   })
+//   .catch((error) =>{
+//       next(error);
+//   });
+// });
 
 //******************************************************************************************
 //CHECKING TOKENS WITH E-MAILS, CREATING SESSIONS AND RE-DIRECTING TO PROFILE
