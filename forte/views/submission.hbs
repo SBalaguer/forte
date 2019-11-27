@@ -32,37 +32,27 @@
     <label for="dateOfCompletion">Date of Completion</label>  
     <input type="date" name="dateOfCompletion">
     
-    <label for="chargeVat">Do you charge VAT?</label>
-    <input type="checkbox" name="chargeVat" >
-    <select name="vat-rate" hidden>
+   <label for="vat">VAT</label>
+    <select name="vat">
        
-        <option value="18%">23%</option>
-        <option value="18%">22%</option>
-        <option value="18%">18%</option>
-        <option value="13%">13%</option>
-        <option value="12%">12%</option>
-        <option value="9%">9%</option>
-        <option value="6%">6%</option>
-        <option value="5%">5%</option>
-        <option value="4%">4%</option>
+        <option value="Does not Charge Vat">Does not charge VAT</option>
+        <option value="23">23%</option>
+        <option value="18">18%</option>
+      
+    </select>
+    <br>
+
+    <label for="irs">IRS</label>
+    <select name="irs">
+       
+        <option value="Does not Charge IRS">Does not charge IRS</option>
+        <option value="23">23%</option>
+        <option value="18">18%</option>
+      
     </select>
     <br>
    
-    <label for="retainIrs">Do retain IRS?</label>
-    <input type="checkbox" name="retainIrs">
-    <select name="irs-rate" hidden>
-       
-        <option value="18%">23%</option>
-        <option value="18%">22%</option>
-        <option value="18%">18%</option>
-        <option value="13%">13%</option>
-        <option value="12%">12%</option>
-        <option value="9%">9%</option>
-        <option value="6%">6%</option>
-        <option value="5%">5%</option>
-        <option value="4%">4%</option>
-    </select>
-    <br>
+ 
   
 
     <label for="comment">Extra Comments</label>

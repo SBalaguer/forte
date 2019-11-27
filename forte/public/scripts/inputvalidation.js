@@ -107,10 +107,10 @@ console.log(chargeVat[0].checked);
 
 chargeVat[0].addEventListener("change", (e) => {
   if (e.srcElement.checked) {
-    document.getElementsByName("vat-rate")[0].removeAttribute("hidden");
+    document.getElementsByName("vatRate")[0].removeAttribute("hidden");
   } else {
 
-    document.getElementsByName("vat-rate")[0].setAttribute("hidden", "true");
+    document.getElementsByName("vatRate")[0].setAttribute("hidden", "true");
   }
 
 })
@@ -120,10 +120,10 @@ console.log(retainIrs[0].checked);
 
 retainIrs[0].addEventListener("change", (e) => {
   if (e.srcElement.checked) {
-    document.getElementsByName("irs-rate")[0].removeAttribute("hidden");
+    document.getElementsByName("irsRate")[0].removeAttribute("hidden");
   } else {
 
-    document.getElementsByName("irs-rate")[0].setAttribute("hidden", "true");
+    document.getElementsByName("irsRate")[0].setAttribute("hidden", "true");
   }
 
 })
