@@ -140,31 +140,33 @@ router.get('/:url/submission/:invoiceId/thanks', (req, res, next) => {
   const invoiceId = req.params.invoiceId;
   let contractorEmail = "";
   Invoice.findById(invoiceId)
-  .then(invoice =>{
-    contractorEmail = invoice.email;
-    // console.log(contractorEmail);
-    //console.log('This is the contractor Email:', contractorEmail)
-    transporter.sendMail({
-      from: `FORTE <${process.env.NODEMAIL_MAIL}>`,
-      to: contractorEmail,
-      subject: 'Your payment has been submited to',
-      //text: 'This should be the body of the text email'
-      html: `
+    .then(invoice => {
+      contractorEmail = invoice.email;
+      // console.log(contractorEmail);
+      //console.log('This is the contractor Email:', contractorEmail)
+      transporter.sendMail({
+        from: `FORTE <${process.env.NODEMAIL_MAIL}>`,
+        to: contractorEmail,
+        subject: 'Your payment has been submited to',
+        //text: 'This should be the body of the text email'
+        html: `
       </style>
       <h1 style="color: Black">Thanks for using Forte!</h1>
       <a href="http://localhost:3000/invoices/view/${invoiceId}">Follow Payment Status</a>
     `
+      });
+    })
+    .then(() => {
+      res.render('./invoice/thanks');
+    })
+    .catch(error => {
+      next(error);
     });
-  })
-  .then(()=>{
-    res.render('./invoice/thanks');
-  })
-  .catch(error =>{
-    next(error);
-  });
 });
 
-{/* <p><strong>Follow</strong> your payment in our website</p> */}
+{
+  /* <p><strong>Follow</strong> your payment in our website</p> */
+}
 
 //******************************************************************************************
 //EDITING INVOICE
@@ -259,21 +261,21 @@ router.post('/:id/:action', (req, res, next) => {
   let companyUrl = '';
   let previousStatus = '';
   Company.findById(companyId)
-  .then(company =>{
-    companyUrl = company.url;
-    return Invoice.findById(id);
-  })
-  .then(invoice => {
-    previousStatus = invoice.status;
-    return Invoice.findByIdAndUpdate(id, {
-      status: action
+    .then(company => {
+      companyUrl = company.url;
+      return Invoice.findById(id);
+    })
+    .then(invoice => {
+      previousStatus = invoice.status;
+      return Invoice.findByIdAndUpdate(id, {
+        status: action
+      });
+    })
+    .then(() => {
+      res.redirect(`/${companyUrl}/profile/${previousStatus}`);
+    }).catch(err => {
+      next(err);
     });
-  })
-  .then(() => {
-    res.redirect(`/${companyUrl}/profile/${previousStatus}`);
-  }).catch(err => {
-    next(err);
-  });
 });
 
 //******************************************************************************************
@@ -283,7 +285,9 @@ router.get('/invoices/view/:invoiceId', (req, res, next) => {
   const invoiceId = req.params.invoiceId;
   Invoice.findById(invoiceId)
     .then(invoice => {
-      res.render('./invoice/single-invoice', {invoice});
+      res.render('./invoice/single-invoice', {
+        invoice
+      });
     })
     .catch(error => {
       next(error);
@@ -297,7 +301,9 @@ router.get('/invoices/:invoiceId', (req, res, next) => {
   const invoiceId = req.params.invoiceId;
   Invoice.findById(invoiceId)
     .then(invoice => {
-      res.render('./dashboard/single-payment', {invoice});
+      res.render('./dashboard/single-payment', {
+        invoice
+      });
     })
     .catch(error => {
       next(error);

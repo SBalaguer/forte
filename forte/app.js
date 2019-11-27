@@ -38,6 +38,13 @@ app.use(cookieParser());
 app.use(serveFavicon(join(__dirname, 'public/images', 'favicon.ico')));
 app.use(express.static(join(__dirname, 'public')));
 hbs.registerPartials(__dirname + "/views/partials");
+hbs.registerHelper('date', value => {
+  return value.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+});
 
 
 app.use(
