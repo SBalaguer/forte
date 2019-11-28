@@ -12,4 +12,33 @@
             {{/unvalue}}
         </ul>
     </div>
-{{>paymentPartial}}
+
+<table class="users table">
+  <thead>
+    <tr>
+      <th class="row-1">Name</th>
+      <th class="row-2">Date</th>
+      <th class="row-3">Work done</th>
+      <th class="row-4">Amount</th>
+      <th class="row-5">Phone</th>
+      <th class="row-6">Email</th>
+      <th class="row-6"></th>
+      
+    </tr>
+  </thead>
+  <tbody>
+     {{#each invoices}}
+  <tr>
+    
+    <td class="main-head">{{contractorName}}</td>
+    <td class="main-head">{{date dateOfCompletion}}</td>
+    <td class="main-head">{{jobDescription}}</td>
+    <td class="main-head">{{amountDue}}</td>
+    <td class="main-head">{{cellphone}}</td>
+    <td class="main-head">{{email}}</td>
+    <td class="main-head"><a href="/invoices/{{this._id}}/"><button class="btn-small">View</button></a></td>
+   
+  </tr>
+  {{/each}}
+  </tbody>
+</table>
