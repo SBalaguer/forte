@@ -34,6 +34,8 @@
         <form action="/{{invoice._id}}/rejected" method="POST">
             <button class="btn-danger">Reject</button></a>
         </form>
-        <a href=""><button class="btn-success">Pay</button></a>
+        <form action="/{{invoice._id}}/paid" method="POST">
+            <button class="btn-success">Pay</button></a>
+        </form>
     </div>
 </div>

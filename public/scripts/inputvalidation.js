@@ -116,5 +116,4 @@ let calc = function (value, vat, irs) {
 document.addEventListener("input", e => {
   document.getElementById("amountToTransfer").value =
     calc(document.getElementById("amountDue").value, document.getElementById("vat").value, document.getElementById("irs").value);
-    
 })

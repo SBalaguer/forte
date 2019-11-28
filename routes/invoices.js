@@ -8,6 +8,7 @@ const multer = require('multer');
 const nodemailer = require('nodemailer');
 const Company = require('./../models/company.js');
 const Invoice = require('./../models/invoice.js');
+const User = require('./../models/user.js');
 const cloudinary = require('cloudinary');
 const storageCloudinary = require('multer-storage-cloudinary');
 
@@ -72,16 +73,18 @@ router.post('/:url/submission', uploader.single('pdf'), (req, res, next) => {
     amountDue,
     vat,
     irs,
+    amountToTransfer,
     dateOfCompletion,
     comment
   } = req.body;
+  console.log(amountToTransfer);
   let pdfUrl = ""
   if(!req.file){
       pdfUrl = undefined;
   }else{
     pdfUrl = req.file.url
   }
-  console.log(pdfUrl);
+  // console.log(pdfUrl);
   const companyUrl = req.params.url;
   // console.log(req.body.dateOfCompletion);
   //console.log(req.body, req.file);
@@ -101,6 +104,7 @@ router.post('/:url/submission', uploader.single('pdf'), (req, res, next) => {
         hiredByPerson,
         amountDue,
         dateOfCompletion,
+        amountToTransfer,
         pdf: pdfUrl,
         vat,
         irs,
@@ -262,25 +266,26 @@ router.post('/:id/:action', (req, res, next) => {
   const action = req.params.action;
   // console.log(req.session.company);
   // console.log("id: ", id, "action: ", action);
-  const companyId = req.session.company;
+  const userId = req.session.user;
   let companyUrl = '';
   let previousStatus = '';
-  Company.findById(companyId)
-    .then(company => {
-      companyUrl = company.url;
-      return Invoice.findById(id);
-    })
-    .then(invoice => {
-      previousStatus = invoice.status;
-      return Invoice.findByIdAndUpdate(id, {
-        status: action
-      });
-    })
-    .then(() => {
-      res.redirect(`/${companyUrl}/profile/${previousStatus}`);
-    }).catch(err => {
-      next(err);
+  User.findById(userId)
+  .populate('companyId')
+  .then(user => {
+    companyUrl = user.companyId.url;
+    return Invoice.findById(id);
+  })
+  .then(invoice => {
+    previousStatus = invoice.status;
+    return Invoice.findByIdAndUpdate(id, {
+      status: action
     });
+  })
+  .then(() => {
+    res.redirect(`/${companyUrl}/profile/${previousStatus}`);
+  }).catch(err => {
+    next(err);
+  });
 });
 
 //******************************************************************************************
