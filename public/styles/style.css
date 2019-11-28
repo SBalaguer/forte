@@ -143,3 +143,8 @@ input:invalid {
   padding: 5px 10px;
 }
 
+#sign-in-link {
+  color: white;
+  font-size: 140%;
+}
+
