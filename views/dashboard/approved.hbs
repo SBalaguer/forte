@@ -12,4 +12,55 @@
             {{/unvalue}}
         </ul>
     </div>
-{{>paymentPartial}}
+
+
+
+
+<table class="users table">
+  <thead>
+    <tr>
+      <th class="row-1">Name</th>
+      <th class="row-2">Date</th>
+      <th class="row-3">Amount to Transfer</th>
+      <th class="row-4"></th>
+      <th class="row-5"></th>
+      <th class="row-6"></th>
+      
+    </tr>
+  </thead>
+  <tbody>
+     {{#each invoices}}
+  <tr>
+    
+    <td class="main-head">{{contractorName}}</td>
+    <td class="main-head">{{date dateOfCompletion}}</td>
+    <td class="main-head">{{amountToTransfer}}</td>
+    <td class="main-head"><a href="/invoices/{{this._id}}/"><button class="btn-small">View</button></a></td>
+    <td class="main-head"><form method="POST" action="/{{this._id}}/rejected"><button class="btn-small">Reject</button></form></td>
+    <td class="main-head"><a href="#process-payment-{{this._id}}"><button class="btn-success btn-small">Pay</button></a></td>
+  </tr>
+  {{/each}}
+  </tbody>
+</table>
+
+
+
+{{#each invoices}}
+<div class="modal modal-animated--zoom-in" id="process-payment-{{this._id}}">
+    <a href="#target" class="modal-overlay close-btn" aria-label="Close"></a>
+    <div class="modal-content" role="document">
+      <div class="modal-header">
+          <a href="#components" class="pull-right" aria-label="Close"><span class="icon"><i class="fa fa-wrapper fa-times"></i></span></a>
+          <div class="modal-title">Process Payment: {{this._id}}</div>
+      </div>
+      <div class="modal-body">
+        <input id="iban-{{this.iban}}" type="text" value="{{this.iban}}">
+        <button onclick="copyToClipboard({{this.iban}})">Copy to Clipboard</button>
+        <button>Visit Bank</button>
+        <form method="POST" action="/{{this._id}}/paid">
+          <button class="btn-success">Payment Processed</button>
+        </form>
+      </div>
+    </div>
+</div>
+{{/each}}
