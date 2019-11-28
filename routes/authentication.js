@@ -7,6 +7,8 @@ const Company = require('./../models/company.js');
 const User = require('./../models/user.js');
 const multer = require('multer');
 const nodemailer = require('nodemailer');
+const cloudinary = require('cloudinary');
+const storageCloudinary = require('multer-storage-cloudinary');
 
 //******************************************************************************************
 //TOKEN GENERATOR FUNCTION
@@ -31,15 +33,18 @@ const transporter = nodemailer.createTransport({
 });
 
 //******************************************************************************************
-//SETTING UP MULTER
-const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, '/tmp');
-  },
-  filename: (req, file, callback) => {
-    // console.log(file);
-    callback(null, file.originalname);
-  }
+//SETTING UP MULTER AND CLOUDINARY
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_API_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const storage = storageCloudinary({
+  cloudinary,
+  folder: 'forte-company-profile-pic',
+  allowedFormats: ['jpg', 'png']
 });
 
 const uploader = multer({
@@ -52,13 +57,20 @@ router.get('/sign-up', (req, res, next) => {
   res.render('sign-up');
 });
 
-router.post('/sign-up', uploader.single('logoUrl') ,(req,res,next) =>{
+router.post('/sign-up', uploader.single('companyLogo') ,(req,res,next) =>{
     // res.redirect('/');
     const { companyName, adminEmail, password, url, street, number, city, NIPC } = req.body;
     //console.log(req.body, req.file);
     const token = generateId(14);
     let passHash = ''
     let fullCompany={};
+    let logoUrl = ""
+    if(!req.file){
+        logoUrl = undefined;
+      }else{
+        logoUrl = req.file.url
+      }
+    console.log(url);
     bcryptjs
     .hash(password, 10)
     .then(hash => {
@@ -68,6 +80,7 @@ router.post('/sign-up', uploader.single('logoUrl') ,(req,res,next) =>{
         passwordHash: hash,
         adminEmail,
         url,
+        logoUrl,
         address: {
             street: street,
             number: number,
