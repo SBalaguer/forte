@@ -1,29 +1,35 @@
 
-<table class="table fixed-head small">
- 
+
+
+<table class="users table">
   <thead>
-  <tr>
-    <th>Contractor</th>
-    <th>Date Due</th>
-    <th>Amount to Transfer</th>
-    
-  </tr>
+    <tr>
+      <th class="row-1">ID</th>
+      <th class="row-2">Name</th>
+      <th class="row-3">Job</th>
+      <th class="row-4">Email</th>
+      <th class="row-5">Email</th>
+      <th class="row-6">Email</th>
+      <th class="row-7">Email</th>
+    </tr>
   </thead>
- <tbody>
-   {{#each invoices}}
+  <tbody>
+     {{#each invoices}}
   <tr>
-    <td>{{company.url}}</td>
-    <td>{{contractorName}}</td>
-    <td>{{date dateOfCompletion}}</td>
-    <td>{{amountDue}}</td>
-    <td><a href="/invoices/{{this._id}}/"><button>View</button></a></td>
-    <td><form method="POST" action="/{{this._id}}/approved"><button class="btn">Approve</button></form></td>
-    <td><form method="POST" action="/{{this._id}}/rejected"><button class="btn-danger">Reject</button></form></td>
-    <td><a href="#process-payment-{{this._id}}"><button class="btn-success">Pay</button></td></a>
+    
+    <td class="main-head">{{contractorName}}</td>
+    <td class="main-head">{{date dateOfCompletion}}</td>
+    <td class="main-head">{{amountDue}}</td>
+    <td class="main-head"><a href="/invoices/{{this._id}}/"><button class="btn-small">View</button></a></td>
+    <td class="main-head"><form method="POST" action="/{{this._id}}/approved"><button class="btn-small">Approve</button></form></td>
+    <td class="main-head"><form method="POST" action="/{{this._id}}/rejected"><button class="btn-danger btn-small">Reject</button></form></td>
+    <td class="main-head"><a href="#process-payment-{{this._id}}"><button class="btn-success btn-small">Pay</button></a></td>
   </tr>
   {{/each}}
   </tbody>
 </table>
+
+
 
 {{#each invoices}}
 <div class="modal modal-animated--zoom-in" id="process-payment-{{this._id}}">
