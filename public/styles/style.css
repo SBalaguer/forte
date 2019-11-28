@@ -7,7 +7,7 @@ li {
 }
 
 body {
-  background: linear-gradient(to bottom, #e2e2e2, #c9d6ff) no-repeat fixed;
+  background: linear-gradient(to bottom, #e2e2e2, #d9e2ff) no-repeat fixed;
 }
 
 /* #main-table {
@@ -64,7 +64,12 @@ input:invalid {
   align-items:center; 
   justify-content:space-between;
 }
-
+.welcome-div{
+  
+    text-align: center;
+   margin: 0 auto;
+  
+}
 .settings-body{
   margin-top: 1em;
   display: flex; 
@@ -144,7 +149,7 @@ input:invalid {
 }
 
 #sign-in-link {
-  color: white;
-  font-size: 140%;
+  color: gray;
+  font-size: 100%;
 }
 
