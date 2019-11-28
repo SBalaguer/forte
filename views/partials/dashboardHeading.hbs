@@ -1,6 +1,9 @@
 <div class="dashboard-header">
+    
     <h1>{{user.companyId.companyName}}</h1>
     <div class="buttons-dashboard-header">
+        
+        
         {{#ifvalue user.role equals="Administrator"}}
             <a href="/{{user.companyId.url}}/settings"><button>Settings</button></a>
         {{/ifvalue}}
@@ -8,5 +11,6 @@
             <button>Logout</button>
         </form>    
     </div>
+
 </div>
-<h5>{{user.role}} Dashboard</h5>
+<h6 style="margin-bottom:1.2em">{{user.role}} Dashboard</h6>

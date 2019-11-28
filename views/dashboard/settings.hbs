@@ -9,11 +9,11 @@
     </div>
 </div>
 
-<div class ="settings-body">
+<div class ="settings-body" style="margin: 0;">
     <div class="settings-half">
         <div class="card">
             <div class="card-head">
-                <p class="card-head-title">Company Details</p>
+                <p class="card-head-title" style="min-width: 40vw;">Company Details</p>
             </div>
             <div class="content">
                 <form action="/{{company.url}}/settings/edit" method="POST">
@@ -40,7 +40,7 @@
                     <label for="NIPC">NIPC</label>
                     <input type="number" name="NIPC" id="nipc" value="{{company.NIPC}}"/>
                     <br>
-                    <button class="btn-light">Submit Changes</button>
+                    <button class="btn-info" ">Submit Changes</button>
                 </form>
             </div>
         </div>
@@ -58,20 +58,20 @@
                                 <img src="{{this.profilePicUrl}}">
                             </figure>
                         </div>
-                        <div class="tile__container">
-                            <p class="tile__subtitle u-no-margin">Name: {{this.name}}</p>
-                            <p class="tile__subtitle u-no-margin">Role: {{this.role}}</p>
+                        <div class="tile__container" style="padding-bottom:2em">
+                            <p class="tile__subtitle u-no-margin"><b>{{this.name}}</b></p>
+                            <p class="tile__subtitle u-no-margin">{{this.role}}</p>
                             {{!-- REMOVING THIS BUTTONS FOR ADMINS --}}
                             {{#unvalue this.role equals="Administrator"}}
                             <p class="tile__buttons u-no-margin">
-                                <a href="#edit-user-{{this._id}}"><button class="btn-light btn-tiny uppercase">Change Role</button></a>
-                                <a href="#delete-user-{{this._id}}"><button class="btn-primary btn-tiny uppercase">Remove User</button></a>
+                                <a href="#edit-user-{{this._id}}"><button class="btn-light btn-small uppercase">Change Role</button></a>
+                                <a href="#delete-user-{{this._id}}"><button class="btn-primary btn-small uppercase">Remove</button></a>
                             </p>
                             {{/unvalue}}
                         </div>
                     </div>
                 {{/each}}
-                <a href="#create-user"><button class="btn-success btn-small">Add new User</button></a>            
+                <a href="#create-user"><button style="width: 100%;"class="btn-info">Add new User</button></a>            
             </div>
         </div>
     </div>
