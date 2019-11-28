@@ -37,18 +37,24 @@
     {{!-- <div class="card-footer level content">
         6:32 PM - 3 Jul 18
     </div> --}}
+    
     <div class="action-bar u-center">
+        {{#ifvalue invoice.status equals="unapproved"}}
         <form action="/{{invoice._id}}/approved" method="POST">
             <button class="btn-success">Approve</button></a>
         </form>
-        <form action="/{{invoice._id}}/unapproved" method="POST">
-            <button class="btn-light">Unnaprove</button></a>
+        <form action="/{{invoice._id}}/rejected" method="POST">
+            <button class="btn-danger">Reject</button></a>
         </form>
+        {{/ifvalue}}
+        {{#ifvalue invoice.status equals="approved"}}
         <form action="/{{invoice._id}}/rejected" method="POST">
             <button class="btn-danger">Reject</button></a>
         </form>
         <form action="/{{invoice._id}}/paid" method="POST">
             <button class="btn-success">Pay</button></a>
         </form>
+        {{/ifvalue}}
     </div>
+
 </div>
