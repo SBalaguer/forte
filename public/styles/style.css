@@ -19,6 +19,9 @@ body {
   width: 100px;
 } */
 
+label{
+  font-weight: bold;
+}
 
 .frame {
   background-color: #FFF;
@@ -69,6 +72,12 @@ input:invalid {
     text-align: center;
    margin: 0 auto;
   
+}
+
+form {
+  display: flex;
+  flex-flow: column;
+  line-height: 30px;
 }
 
 

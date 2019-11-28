@@ -10,10 +10,10 @@
 <form action="/{{company.url}}/submission" method="POST" enctype="multipart/form-data">
     
     <label for="name">Name</label>  
-    <input type="text" required name="contractorName">
+    <input type="text" required name="contractorName"> 
     
     <label for="email">Email</label>  
-    <input type="email" required name="email">
+    <input type="email" required name="email"> 
     
     <label for="cellphone">Cellphone</label>  
     <input type="text" required name="cellphone">
@@ -42,7 +42,7 @@
         <option value="10">10%</option>
       
     </select>
-    <br>
+    
 ​
     <label for="irs">IRS</label>
     <select name="irs" id="irs">
@@ -52,7 +52,7 @@
         <option value="10">10%</option>
       
     </select>
-    <br>
+  
    <label for="amountToTransfer">Amount to be transfered</label>
  <input type="number" id="amountToTransfer" name="amountToTransfer" step="any">
   
@@ -62,7 +62,8 @@
 ​
     <label for="pdf">Add your Invoice below</label>
     <input type="file" name="pdf">
-    <button id="submit">Submit</button>
+    <br>
+    <button class="btn-success" id="submit">Submit</button>
 </form>
 
 <script src="/scripts/inputvalidation.js"></script>
