@@ -23,7 +23,7 @@ const schema = new mongoose.Schema({
   },
   iban: {
     type: String,
-    lowercase: true,
+    uppercase: true,
     trim: true,
     required: true
   },
