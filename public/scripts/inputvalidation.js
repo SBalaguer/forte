@@ -110,7 +110,7 @@ let calc = function (value, vat, irs) {
     irs = 0;
   }
 
-  return value * (1 + (vat - irs) / 100)
+  return Math.round((value * (1 + (vat - irs) / 100)) * 100) / 100
 }
 
 document.addEventListener("input", e => {
