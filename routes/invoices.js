@@ -44,16 +44,31 @@ const uploader = multer({
 
 //******************************************************************************************
 //SETTING UP SUBMISSION ROUTES
+
+const makePicRound = function(url, w){
+  if (url === "https://www.amphenol-socapex.com/sites/default/files/wysiwyg/groupe_1.png"){
+    return url;
+  }else{
+    const roundUrl = `ar_1:1,bo_0px_solid_rgb:ffffff,c_fill,co_rgb:ffffff,f_png,g_auto,r_max,${w}`
+    let a = url.split('/')
+    let indexOfUpload = a.indexOf('upload');
+    a.splice(indexOfUpload+1,0,roundUrl);
+    return a.join("/");
+  }
+}
+
 router.get('/:url/submission', (req, res, next) => {
   //console.log('The company ID is:',req.session.company);
   const companyUrl = req.params.url;
+  let companyProfileRound=""
   Company.findOne({
       url: companyUrl
     })
     .then(company => {
       //console.log('This is the logged in company', company);
+      companyProfileRound = makePicRound(company.logoUrl, "w_300");
       res.render('./submission', {
-        company
+        company, companyProfileRound
       });
     })
     .catch(error => {

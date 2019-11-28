@@ -74,9 +74,9 @@ router.get('/:url/settings' , isSignedIn, (req, res, next) => {
   .then(companyData =>{
     company = companyData;
     companyId = company._id;
-    console.log('this is the company url logo:', company.logoUrl);
+    // console.log('this is the company url logo:', company.logoUrl);
     companyProfileRound = makePicRound(company.logoUrl, "w_300");
-    console.log(companyProfileRound);
+    // console.log(companyProfileRound);
     // console.log("this is the companyId", companyId);
     return User.find({companyId: companyId});
   })
