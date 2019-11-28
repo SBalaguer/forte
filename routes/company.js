@@ -53,21 +53,37 @@ router.get('/:url/profile/:status', isSignedIn, (req, res, next) => {
 //******************************************************************************************
 //COMPANY SETTINGS VIEW
 
+const makePicRound = function(url, w){
+  if (url === "https://www.amphenol-socapex.com/sites/default/files/wysiwyg/groupe_1.png"){
+    return url;
+  }else{
+    const roundUrl = `ar_1:1,bo_0px_solid_rgb:ffffff,c_fill,co_rgb:ffffff,f_png,g_auto,r_max,${w}`
+    let a = url.split('/')
+    let indexOfUpload = a.indexOf('upload');
+    a.splice(indexOfUpload+1,0,roundUrl);
+    return a.join("/");
+  }
+}
+
 router.get('/:url/settings' , isSignedIn, (req, res, next) => {
   const companyUrl = req.params.url;
   let companyId = "";
   let company = {};
+  let companyProfileRound=""
   Company.findOne({url: companyUrl})
   .then(companyData =>{
     company = companyData;
     companyId = company._id;
+    console.log('this is the company url logo:', company.logoUrl);
+    companyProfileRound = makePicRound(company.logoUrl, "w_300");
+    console.log(companyProfileRound);
     // console.log("this is the companyId", companyId);
     return User.find({companyId: companyId});
   })
   .then(usersInCompany =>{
     // console.log('company:', company);
     // console.log('users:', usersInCompany);
-    res.render('./dashboard/settings', { company , usersInCompany });
+    res.render('./dashboard/settings', { company , usersInCompany, companyProfileRound });
   })
   .catch(error =>{
     next(error);

@@ -21,7 +21,6 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-
 //******************************************************************************************
 //SETTING UP MULTER AND CLOUDINARY
 
