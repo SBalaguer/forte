@@ -8,6 +8,8 @@ const multer = require('multer');
 const nodemailer = require('nodemailer');
 const Company = require('./../models/company.js');
 const Invoice = require('./../models/invoice.js');
+const cloudinary = require('cloudinary');
+const storageCloudinary = require('multer-storage-cloudinary');
 
 //******************************************************************************************
 //SETING UP NODEMAILER
@@ -21,15 +23,18 @@ const transporter = nodemailer.createTransport({
 
 
 //******************************************************************************************
-//SETTING UP MULTER
-const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, '/tmp');
-  },
-  filename: (req, file, callback) => {
-    //   console.log(file);
-    callback(null, file.originalname);
-  }
+//SETTING UP MULTER AND CLOUDINARY
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_API_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const storage = storageCloudinary({
+  cloudinary,
+  folder: 'forte-company-invoice-submission',
+  allowedFormats: ['pdf']
 });
 
 const uploader = multer({
@@ -71,8 +76,15 @@ router.post('/:url/submission', uploader.single('pdf'), (req, res, next) => {
     dateOfCompletion,
     comment
   } = req.body;
+  let pdfUrl = ""
+  if(!req.file){
+      pdfUrl = undefined;
+  }else{
+    pdfUrl = req.file.url
+  }
+  console.log(pdfUrl);
   const companyUrl = req.params.url;
-  console.log(req.body.dateOfCompletion);
+  // console.log(req.body.dateOfCompletion);
   //console.log(req.body, req.file);
   let companyId = "";
   let invoiceId = "";
@@ -90,10 +102,10 @@ router.post('/:url/submission', uploader.single('pdf'), (req, res, next) => {
         hiredByPerson,
         amountDue,
         dateOfCompletion,
+        pdf: pdfUrl,
         vat,
         irs,
         comment,
-        pdf: req.file.path,
         status: 'unapproved',
         companyWorkedFor: companyId
       });

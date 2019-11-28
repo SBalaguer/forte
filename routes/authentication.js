@@ -70,7 +70,7 @@ router.post('/sign-up', uploader.single('companyLogo') ,(req,res,next) =>{
       }else{
         logoUrl = req.file.url
       }
-    console.log(url);
+    // console.log(url);
     bcryptjs
     .hash(password, 10)
     .then(hash => {
