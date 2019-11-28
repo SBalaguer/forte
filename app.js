@@ -46,15 +46,15 @@ hbs.registerHelper('date', value => {
   });
 });
 
-hbs.registerHelper("ifvalue", function(conditional, options) {
+hbs.registerHelper("ifvalue", function (conditional, options) {
   if (conditional == options.hash.equals) {
-      return options.fn(this);
+    return options.fn(this);
   } else {
-      return options.inverse(this);
+    return options.inverse(this);
   }
 });
 
-hbs.registerHelper("unvalue", function(conditional, options) {
+hbs.registerHelper("unvalue", function (conditional, options) {
   if (conditional == options.hash.equals) {
     return options.inverse(this);
   } else {
@@ -98,7 +98,7 @@ app.use((req, res, next) => {
   } else {
     next();
   }
-  
+
 });
 
 app.use('/', authetication);

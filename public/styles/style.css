@@ -10,6 +10,15 @@ body {
   background: linear-gradient(to bottom, #e2e2e2, #c9d6ff) no-repeat fixed;
 }
 
+/* #main-table {
+  table-layout: fixed;
+  width: 100%;
+} */
+
+/* th,td {
+  width: 100px;
+} */
+
 
 .frame {
   background-color: #FFF;
@@ -24,6 +33,7 @@ body {
 
 .table.fixed-head tbody {
   height:50vh;
+
 }
 
 .dashboard-header {
@@ -103,3 +113,33 @@ input:invalid {
 .selling-line strong{
   color: #fab633;
 }
+.users {
+  table-layout: fixed;
+  width: 100%;
+  white-space: nowrap;
+}
+/* Column widths are based on these cells */
+.row-ID {
+  width: 10%;
+}
+.row-name {
+  width: 40%;
+}
+.row-job {
+  width: 30%;
+}
+.row-email {
+  width: 20%;
+}
+.users td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.users td,
+.users th {
+  text-align: left;
+  padding: 5px 10px;
+}
+
