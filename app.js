@@ -46,6 +46,12 @@ hbs.registerHelper('date', value => {
   });
 });
 
+hbs.registerHelper('currency', value => {
+  value = value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+  value = "€"+value
+  return value
+});
+
 hbs.registerHelper("ifvalue", function (conditional, options) {
   if (conditional == options.hash.equals) {
     return options.fn(this);
