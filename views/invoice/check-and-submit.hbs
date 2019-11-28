@@ -4,6 +4,7 @@
 <div class="card">
     <div class="card-head">
         <p class="card-head-title">Payment due to company {{companyData.companyName}}</p>
+        <div class="tag tag--link tag--xlarge" style="margin-top:0.5em; margin-right:0.5em;">{{invoice.status}}</div>
     </div>
     <div class="content">
         <p>Name: {{invoice.contractorName}}</p>
@@ -19,8 +20,10 @@
         <p>VAT: {{invoice.vat}}</p>
         <p>IRS: {{invoice.irs}}</p>
         <p>Amount to be Paid: {{currency invoice.amountToTransfer}}</p>
-        
+        <hr>
         <p>Extra Comments: {{invoice.comment}}</p>
+        <hr>
+        <a href="{{invoice.pdf}}" target="_blank"><p>Invoice Submitted</p></a>
     </div>
     {{!-- <div class="card-footer level content">
         6:32 PM - 3 Jul 18

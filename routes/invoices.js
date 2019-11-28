@@ -293,11 +293,16 @@ router.post('/:id/:action', (req, res, next) => {
 
 router.get('/invoices/view/:invoiceId', (req, res, next) => {
   const invoiceId = req.params.invoiceId;
+  let invoice = {}
+  //console.log(req.session.user);
   Invoice.findById(invoiceId)
-    .then(invoice => {
-      res.render('./invoice/single-invoice', {
-        invoice
-      });
+    .then(inv => {
+      invoice = inv;
+      const companyId = invoice.companyWorkedFor;
+      return Company.findById(companyId)
+    })
+    .then(company =>{
+      res.render('./invoice/single-invoice', { invoice, company });
     })
     .catch(error => {
       next(error);
@@ -309,15 +314,30 @@ router.get('/invoices/view/:invoiceId', (req, res, next) => {
 
 router.get('/invoices/:invoiceId', (req, res, next) => {
   const invoiceId = req.params.invoiceId;
-  Invoice.findById(invoiceId)
-    .then(invoice => {
-      res.render('./dashboard/single-payment', {
-        invoice
-      });
-    })
-    .catch(error => {
-      next(error);
-    });
+  const userId = req.session.user;
+  // console.log("the id of the user in session is:",req.session.user);
+  let userRole = "";
+  User.findById(userId)
+  .then(user =>{
+    userRole = user.role;
+    return Invoice.findById(invoiceId)
+  })
+  .then(invoice => {
+    switch (userRole){
+      case "Administrator":
+        res.render('./dashboard/single-payment', { invoice })
+        break;
+      case "Controller":
+        res.render('./dashboard/single-payment-controller', { invoice })
+        break;
+      case "Payer":
+        res.render('./dashboard/single-payment-payer', { invoice })
+        break;
+    }
+  })
+  .catch(error => {
+    next(error);
+  });
 });
 
 

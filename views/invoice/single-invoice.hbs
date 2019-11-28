@@ -1,8 +1,19 @@
 <h1>Single Payment</h1>
 <div class="card">
     <div class="card-head">
-        <p class="card-head-title">Payment due to contractor {{invoice.contractorName}}</p>
-        <div class="tag tag--link tag--large">{{invoice.status}}</div>
+        <p class="card-head-title">Payment submited to {{company.companyName}}</p>
+        {{#ifvalue invoice.status equals="rejected"}}
+        <div class="tag tag--danger tag--xlarge" style="margin-top:0.5em; margin-right:0.5em;">{{invoice.status}}</div>
+        {{/ifvalue}}
+        {{#ifvalue invoice.status equals="approved"}}
+        <div class="tag tag--info tag--xlarge" style="margin-top:0.5em; margin-right:0.5em;">{{invoice.status}}</div>
+        {{/ifvalue}}
+        {{#ifvalue invoice.status equals="unapproved"}}
+        <div class="tag tag--warning tag--xlarge" style="margin-top:0.5em; margin-right:0.5em;">{{invoice.status}}</div>
+        {{/ifvalue}}
+        {{#ifvalue invoice.status equals="paid"}}
+        <div class="tag tag--success tag--xlarge" style="margin-top:0.5em; margin-right:0.5em;">{{invoice.status}}</div>
+        {{/ifvalue}}
     </div>
     <div class="content">
         <p>Name: {{invoice.contractorName}}</p>
@@ -15,24 +26,11 @@
         <p>Date of Completion: {{date invoice.dateOfCompletion}}</p>
         <hr>
         <p>Amount Due: {{currency invoice.amountDue}}</p>
-        <p>Do you Charge VAT: {{invoice.vat.chargeVat}}</p>
-        <p>Do you Retain IRS: {{invoice.irs.retention}}</p>
+        <p>Do you Charge VAT: {{invoice.vat}}</p>
+        <p>Do you Retain IRS: {{invoice.irs}}</p>
         <p>Amount to be Paid: {{currency invoice.amountToTransfer}}</p>
         <p>Extra Comments: {{invoice.comment}}</p>
+        <hr>
+        <a href="{{invoice.pdf}}" target="_blank"><p>Invoice Submitted</p></a>
     </div>
-    {{!-- <div class="card-footer level content">
-        6:32 PM - 3 Jul 18
-    </div> --}}
-    {{!-- <div class="action-bar u-center">
-        <form action="/{{invoice._id}}/approved" method="POST">
-            <button class="btn-success">Approve</button></a>
-        </form>
-        <form action="/{{invoice._id}}/unapproved" method="POST">
-            <button class="btn">Unnaprove</button></a>
-        </form>
-        <form action="/{{invoice._id}}/rejected" method="POST">
-            <button class="btn-danger">Reject</button></a>
-        </form>
-        <a href=""><button class="btn">Pay</button></a>
-    </div> --}}
 </div>
