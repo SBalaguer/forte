@@ -179,7 +179,7 @@ router.get('/:url/submission/:invoiceId/thanks', (req, res, next) => {
         html: `
       </style>
       <h1 style="color: Black">Thanks for using Forte!</h1>
-      <a href="http://localhost:3000/invoices/view/${invoiceId}">Follow Payment Status</a>
+      <a href="https://ironhack-forte.herokuapp.com/invoices/view/${invoiceId}">Follow Payment Status</a>
     `
       });
     })
