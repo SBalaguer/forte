@@ -55,11 +55,11 @@
       </div>
       <div class="modal-body">
          
-        <h3>{{this.amountToTransfer}}€</h3>
+        <h3>{{currency this.amountToTransfer}}</h3>
         <input id="iban-{{this.iban}}" type="text" value="{{this.iban}}">
-        <div style="display: flex;"> 
+        <div style="display: flex; margin-top: 0.5em"> 
           <button id="copy-clipboard">Copy to Clipboard</button>
-        <a href="http://www.bpinetempresas.pt" target="blank"><button>Visit Bank</button></a></div>
+        <a href="http://www.bpinetempresas.pt" target="blank" style="margin: 0; padding: 0; margin-left: 0.3em"><button>Visit Bank</button></a></div>
        
         <form method="POST" action="/{{this._id}}/paid">
           <button class="btn-success">Payment Processed</button>
