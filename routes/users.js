@@ -82,7 +82,7 @@ router.post('/:url/settings/new-user',(req,res,next) =>{
               <p>Temporary Password: ${firstPass}</p>
             `
         });
-        req.session.user = newUser._id;
+        //req.session.user = newUser._id;
         res.redirect(`/${companyUrl}/settings`);
     })
     .catch(error =>{
@@ -127,9 +127,9 @@ router.post('/users/:userId/updatePass', (req,res,next) =>{
   const userId = req.params.userId;
   const temPass = req.body.password
   const newPass = req.body.newPassword
-  console.log('User Id: ', userId )
-  console.log('temPass: ', temPass )
-  console.log('newPass: ', newPass )
+  // console.log('User Id: ', userId )
+  // console.log('temPass: ', temPass )
+  // console.log('newPass: ', newPass )
   User.findById(userId)
   .then(user =>{
     return bcryptjs.compare(temPass, user.passwordHash);
