@@ -59,7 +59,7 @@
         <input id="iban-{{this.iban}}" type="text" value="{{this.iban}}">
         <div style="display: flex;"> 
           <button id="copy-clipboard">Copy to Clipboard</button>
-        <button>Visit Bank</button></div>
+        <a href="http://www.bpinetempresas.pt" target="blank"><button>Visit Bank</button></a></div>
        
         <form method="POST" action="/{{this._id}}/paid">
           <button class="btn-success">Payment Processed</button>
