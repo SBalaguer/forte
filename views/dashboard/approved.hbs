@@ -51,12 +51,16 @@
     <div class="modal-content" role="document">
       <div class="modal-header">
           <a href="#components" class="pull-right" aria-label="Close"><span class="icon"><i class="fa fa-wrapper fa-times"></i></span></a>
-          <div class="modal-title">Process Payment: {{this.contractorName}}</div>
+          <div class="modal-title">Process Payment for {{this.contractorName}}</div>
       </div>
       <div class="modal-body">
+         
+        <h3>{{this.amountToTransfer}}€</h3>
         <input id="iban-{{this.iban}}" type="text" value="{{this.iban}}">
-        <button onclick="copyToClipboard({{this.iban}})">Copy to Clipboard</button>
-        <button>Visit Bank</button>
+        <div style="display: flex;"> 
+          <button id="copy-clipboard">Copy to Clipboard</button>
+        <button>Visit Bank</button></div>
+       
         <form method="POST" action="/{{this._id}}/paid">
           <button class="btn-success">Payment Processed</button>
         </form>
@@ -64,3 +68,4 @@
     </div>
 </div>
 {{/each}}
+<script src="/scripts/copyclipboard.js"></script>
