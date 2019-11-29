@@ -55,7 +55,7 @@ router.post('/:url/settings/new-user',(req,res,next) =>{
     })
     .then(company =>{
       companyId = company._id;
-      console.log(companyId)
+      // console.log(companyId)
       return User.create({
         name,
         email,
@@ -109,7 +109,7 @@ router.get('/users/confirm/:token', (req,res,next) =>{
           req.user = user;
           res.locals.user = req.user;
           //console.log(req.company);
-          res.render('./user/success-log-in');
+          res.render('./admin/new-user-update-pass', { user });
         }
       })
       .catch(error =>{
@@ -120,6 +120,37 @@ router.get('/users/confirm/:token', (req,res,next) =>{
         // console.log(req.session)
       });
 });
+
+//******************************************************************************************
+//UPDATING USERS TEMP PASSWORD
+router.post('/users/:userId/updatePass', (req,res,next) =>{
+  const userId = req.params.userId;
+  const temPass = req.body.password
+  const newPass = req.body.newPassword
+  console.log('User Id: ', userId )
+  console.log('temPass: ', temPass )
+  console.log('newPass: ', newPass )
+  User.findById(userId)
+  .then(user =>{
+    return bcryptjs.compare(temPass, user.passwordHash);
+  })
+  .then(status =>{
+    console.log('Temp password matches')
+    return bcryptjs.hash(newPass,10)
+  })
+  .then(hash =>{
+    const passwordHash = hash;
+    return User.findByIdAndUpdate(userId, { passwordHash })
+  })
+  .then(newUser =>{
+    console.log(newUser)
+    res.redirect('/sign-in');
+  })
+  .catch(error =>{
+    next(error)
+  })
+})
+
 
 //******************************************************************************************
 //DELETING USERS

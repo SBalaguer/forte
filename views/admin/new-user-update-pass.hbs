@@ -1,0 +1,39 @@
+<h2 style="margin-bottom: 0.3em;">Thanks for confirming your email!</h2>
+<h5 style="margin-bottom: 1em;">Please change your temporary password below:</h5>
+{{!-- <div>
+    <form action="/sign-in" method="POST">
+        <div class="input-control">
+            <input type="email" class="input-contains-icon" name="adminEmail" placeholder="Email"/><span class="icon"><i class="fa fa-wrapper fa-envelope"></i></span>
+        </div>
+        <div class="input-control">
+            <input type="password" class="input-contains-icon" name="password" placeholder="Password"/><span class="icon"><i class="fa fa-wrapper fa-lock"></i></span>
+        </div>
+        <button>Change Password</button>
+    </form>
+</div>
+
+<a href="/{{company.url}}/profile/approved"><button>Continue to Profile</button></a> --}}
+
+
+<div class="card">
+    <div class="card-head">
+        <p class="card-head-title">{{user.name}}</p>
+    </div>
+    <form action="/users/{{user._id}}/updatePass" method="POST" style="margin: 0; padding: 0">
+        <div class="content">
+            <p><strong>E-mail: </strong>{{user.email}}</p>
+            <p><strong>Role: </strong>{{user.role}}</p>
+            <label for="password">Temporay Password</label>
+            <div class="input-control">
+                <input type="password" class="input-contains-icon" name="password" placeholder="Temporary Password"/><span class="icon"><i class="fa fa-wrapper fa-lock"></i></span>
+            </div>
+                <label for="newPassword">New Password</label>
+            <div class="input-control">
+                <input type="password" class="input-contains-icon" name="newPassword" placeholder="New Password"/><span class="icon"><i class="fa fa-wrapper fa-lock"></i></span>
+            </div>
+        </div>
+        <div class="u-center">
+            <button class="btn-success">Submit</button>
+        </div>
+    </form>
+</div>

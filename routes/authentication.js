@@ -147,7 +147,7 @@ router.post('/sign-in', (req,res,next) =>{
       userId = user._id;
       userRole = user.role;
       companyUrl = user.companyId.url;
-      console.log('This is the info of the user logging-in',userId, companyUrl);
+      // console.log('This is the info of the user logging-in',userId, companyUrl);
       return bcryptjs.compare(password, user.passwordHash);
     } else {
         return Promise.reject(new Error('Username does not exist.')); 
@@ -155,7 +155,7 @@ router.post('/sign-in', (req,res,next) =>{
   })
   .then(response => {
     if (response) {
-        console.log('user has loggedin');
+        // console.log('user has loggedin');
         req.session.user = userId;
         switch(userRole){
           case "Administrator":
@@ -177,43 +177,13 @@ router.post('/sign-in', (req,res,next) =>{
   });
 });
 
-// router.post('/sign-in', (req,res,next) =>{
-//   const { adminEmail, password } = req.body;
-//   // console.log(req.body);
-//   let companyId;
-//   let companyUrl;
-//   Company.findOne({adminEmail})
-//   .then(company =>{
-//       if (company) {
-//         companyId = company._id;
-//         companyUrl = company.url;
-//         console.log('This is the info of the company logging-in',companyId, companyUrl);
-//         return bcryptjs.compare(password, company.passwordHash);
-//       } else {
-//           return Promise.reject(new Error('Username does not exist.')); 
-//       }
-//   })
-//   .then(response => {
-//       if (response) {
-//           console.log('user has loggedin');
-//           req.session.company = companyId;
-//           res.redirect(`/${companyUrl}/profile/approved`);
-//       } else {
-//           return Promise.reject(new Error('Wrong password.'));
-//       }
-//   })
-//   .catch((error) =>{
-//       next(error);
-//   });
-// });
-
 //******************************************************************************************
 //CHECKING TOKENS WITH E-MAILS, CREATING SESSIONS AND RE-DIRECTING TO PROFILE
 //"http://localhost:3000/confirm/${token}"
 
 router.get('/confirm/:token', (req,res,next) =>{
   const confirmationToken = req.params.token;
-  console.log(confirmationToken);
+  // console.log(confirmationToken);
   Company.findOneAndUpdate({ verificationToken: confirmationToken }, {
     verificationStatus: true
   })
@@ -226,7 +196,7 @@ router.get('/confirm/:token', (req,res,next) =>{
         // req.session.user = user._id
         req.company = company;
         res.locals.company = req.company;
-        console.log(req.company);
+        // console.log(req.company);
         res.render('./admin/success-log-in', { company });
       }
     })

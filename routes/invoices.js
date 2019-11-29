@@ -92,7 +92,7 @@ router.post('/:url/submission', uploader.single('pdf'), (req, res, next) => {
     dateOfCompletion,
     comment
   } = req.body;
-  console.log(amountToTransfer);
+  // console.log(amountToTransfer);
   let pdfUrl = ""
   if(!req.file){
       pdfUrl = undefined;
@@ -266,7 +266,7 @@ router.post('/:url/submission/:invoiceId/delete', (req, res, next) => {
   const invoiceId = req.params.invoiceId;
   Invoice.findByIdAndDelete(invoiceId)
     .then(() => {
-      console.log('Item has been removed');
+      // console.log('Item has been removed');
       res.redirect('/');
     })
     .catch(error => {
