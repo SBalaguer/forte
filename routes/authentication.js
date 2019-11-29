@@ -119,7 +119,7 @@ router.post('/sign-up', uploader.single('companyLogo') ,(req,res,next) =>{
         </style>
         <h1 style="color: Black">Welcome to forte!</h1>
         <p><strong>Confirm</strong> your email down here:</p>
-        <a href="http://localhost:3000/confirm/${token}">Confirm email</a>
+        <a href="https://ironhack-forte.herokuapp.com/confirm/${token}">Confirm email</a>
       `
     }))
     .catch(error => {

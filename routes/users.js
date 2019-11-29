@@ -78,7 +78,7 @@ router.post('/:url/settings/new-user',(req,res,next) =>{
               <h1 style="color: Black">Welcome to forte!</h1>
               <p>A new account has been created for you.</p>
               <p>Please <strong>Confirm</strong> your email down here. Once logged-in, please change your password!</p>
-              <a href="http://localhost:3000/users/confirm/${verificationToken}">Confirm email</a>
+              <a href="https://ironhack-forte.herokuapp.com/users/confirm/${verificationToken}">Confirm email</a>
               <p>Temporary Password: ${firstPass}</p>
             `
         });
