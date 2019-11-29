@@ -32,16 +32,32 @@ router.get('/:url/profile/:status', isSignedIn, (req, res, next) => {
     // console.log(comp, invoices);
     switch (invoiceStatus) {
       case "approved":
-        res.render('./dashboard/approved', { user, invoices });
+        if(user.role !== "Controller"){
+          res.render('./dashboard/approved', { user, invoices });
+        } else {
+          res.render('./dashboard/wrong-role');
+        }
         break;
       case "unapproved":
-        res.render('./dashboard/unapproved', { user, invoices });
+        if(user.role !== "Payer"){
+          res.render('./dashboard/unapproved', { user, invoices });
+        } else {
+          res.render('./dashboard/wrong-role');
+        }
         break;
       case "rejected":
-        res.render('./dashboard/rejected', { user, invoices });
+        if(user.role !== "Payer"){
+          res.render('./dashboard/rejected', { user, invoices });
+        } else {
+          res.render('./dashboard/wrong-role');
+        }
         break;
       case "paid":
-        res.render('./dashboard/paid', { user, invoices });
+        if(user.role !== "Controller"){
+          res.render('./dashboard/paid', { user, invoices });
+        } else {
+          res.render('./dashboard/wrong-role');
+        }
         break;
     }
   })
